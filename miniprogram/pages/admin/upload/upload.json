@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "上传文档",
+  "backgroundColor": "#F5F7FA",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

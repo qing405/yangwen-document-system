@@ -1,0 +1,167 @@
+<!--pages/form-fill/form-fill.wxml-->
+<view class="container">
+  <!-- 头部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <icon name="arrow-left" size="20" color="#FFFFFF"></icon>
+    </view>
+    <view class="header-title">
+      <text>填写表单</text>
+    </view>
+    <view class="header-right">
+      <view class="document-btn" bindtap="viewDocument" wx:if="{{formData.formDocumentUrl}}">
+        <icon name="document-center" size="16" color="#FFFFFF"></icon>
+        <text>查看文档</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 表单内容 -->
+  <view class="form-content" wx:else>
+    <!-- 表单信息 -->
+    <view class="form-info">
+      <view class="form-title">{{formData.formTitle}}</view>
+      <view class="form-description" wx:if="{{formData.formDescription}}">
+        {{formData.formDescription}}
+      </view>
+      <view class="form-meta">
+        <view class="meta-item">
+          <text class="meta-label">分派人：</text>
+          <text class="meta-value">{{formData.assignerName}}</text>
+        </view>
+        <view class="meta-item" wx:if="{{formData.deadline}}">
+          <text class="meta-label">截止时间：</text>
+          <text class="meta-value">{{formData.deadline}}</text>
+        </view>
+        <view class="meta-item" wx:if="{{formData.priority}}">
+          <text class="meta-label">优先级：</text>
+          <text class="meta-value priority-{{formData.priority}}">
+            {{formData.priority === 'high' ? '高' : formData.priority === 'medium' ? '中' : '低'}}
+          </text>
+        </view>
+        <view class="meta-item" wx:if="{{formData.description}}">
+          <text class="meta-label">说明：</text>
+          <text class="meta-value">{{formData.description}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 表单字段 -->
+    <view class="form-fields">
+      <view class="field-group">
+        <view class="field-label">基本信息</view>
+        
+        <!-- 姓名 -->
+        <view class="field-item">
+          <text class="field-name">姓名 *</text>
+          <input 
+            class="field-input" 
+            placeholder="请输入您的姓名"
+            value="{{formResponses.name}}"
+            data-field="name"
+            bindinput="onInputChange"
+          />
+        </view>
+
+        <!-- 部门 -->
+        <view class="field-item">
+          <text class="field-name">部门 *</text>
+          <input 
+            class="field-input" 
+            placeholder="请输入您的部门"
+            value="{{formResponses.department}}"
+            data-field="department"
+            bindinput="onInputChange"
+          />
+        </view>
+
+        <!-- 工号 -->
+        <view class="field-item">
+          <text class="field-name">工号 *</text>
+          <input 
+            class="field-input" 
+            placeholder="请输入您的工号"
+            value="{{formResponses.workId}}"
+            data-field="workId"
+            bindinput="onInputChange"
+          />
+        </view>
+
+        <!-- 联系电话 -->
+        <view class="field-item">
+          <text class="field-name">联系电话</text>
+          <input 
+            class="field-input" 
+            placeholder="请输入联系电话"
+            value="{{formResponses.phone}}"
+            data-field="phone"
+            bindinput="onInputChange"
+          />
+        </view>
+
+        <!-- 邮箱 -->
+        <view class="field-item">
+          <text class="field-name">邮箱</text>
+          <input 
+            class="field-input" 
+            placeholder="请输入邮箱地址"
+            value="{{formResponses.email}}"
+            data-field="email"
+            bindinput="onInputChange"
+          />
+        </view>
+      </view>
+
+      <!-- 自定义字段区域 -->
+      <view class="field-group">
+        <view class="field-label">表单内容</view>
+        
+        <!-- 这里可以根据表单类型动态生成字段 -->
+        <view class="field-item">
+          <text class="field-name">填写内容 *</text>
+          <textarea 
+            class="field-textarea" 
+            placeholder="请根据文档要求填写相关内容..."
+            value="{{formResponses.content}}"
+            data-field="content"
+            bindinput="onInputChange"
+            maxlength="1000"
+          />
+          <view class="field-hint">最多1000字</view>
+        </view>
+
+        <!-- 附件上传 -->
+        <view class="field-item">
+          <text class="field-name">附件</text>
+          <view class="upload-area" bindtap="uploadAttachment">
+            <icon name="form-fill" size="24" color="#007BFF"></icon>
+            <text class="upload-text">点击上传附件</text>
+            <text class="upload-hint">支持图片、文档等格式</text>
+          </view>
+          <view class="attachment-list" wx:if="{{formResponses.attachments}}">
+            <view class="attachment-item" wx:for="{{formResponses.attachments}}" wx:key="index">
+              <text class="attachment-name">{{item.name}}</text>
+              <button class="remove-attachment" bindtap="removeAttachment" data-index="{{index}}">删除</button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="submit-section">
+      <button 
+        class="submit-btn {{submitting ? 'submitting' : ''}}" 
+        bindtap="submitForm"
+        disabled="{{submitting}}"
+      >
+        {{submitting ? '提交中...' : '提交表单'}}
+      </button>
+    </view>
+  </view>
+</view>

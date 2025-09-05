@@ -1,0 +1,50 @@
+/* pages/form-history/form-history.wxss */
+
+/* 页面标题 */
+.page-header {
+  margin-bottom: 16px;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #666666;
+}
+
+/* 历史记录列表 */
+.history-list {
+  margin-bottom: 16px;
+}
+
+.history-item {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.history-item:active {
+  background: #F8F9FA;
+  transform: scale(0.98);
+}
+
+.list-item-arrow {
+  color: #999999;
+  font-size: 16px;
+}
+
+.arrow-icon {
+  font-weight: bold;
+}
+
+/* 无更多数据 */
+.no-more {
+  text-align: center;
+  padding: 16px;
+  color: #999999;
+  font-size: 12px;
+}

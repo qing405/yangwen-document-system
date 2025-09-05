@@ -1,0 +1,373 @@
+/* pages/index/index.wxss */
+
+.container {
+  padding: 0;
+  background-color: #F5F7FA;
+  min-height: 100vh;
+}
+
+/* 用户信息区域 */
+.user-section {
+  background: linear-gradient(135deg, #0D1F3C 0%, #1E3A68 100%);
+  padding: 20px 16px 32px;
+  color: white;
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(13, 31, 60, 0.3);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  margin-right: 12px;
+}
+
+.avatar-icon {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.avatar-text {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.user-role {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+}
+
+.welcome-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* 日期时间区域 */
+.datetime-section {
+  text-align: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.current-date {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.current-time {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  font-family: 'Courier New', monospace;
+}
+
+/* 统计信息卡片 */
+.stats-section {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 0 16px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.section-title icon {
+  margin-right: 8px;
+}
+
+/* 区域头部 */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* 头部操作区域 */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 更多按钮 */
+.more-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: rgba(0, 123, 255, 0.1);
+  border-radius: 16px;
+  font-size: 14px;
+  color: #007BFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.more-btn:active {
+  background: rgba(0, 123, 255, 0.2);
+  transform: scale(0.95);
+}
+
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px 12px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E9ECEF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-height: 100px;
+}
+
+.stat-card-hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+  border-color: #007BFF;
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 123, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.stat-content {
+  width: 100%;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666666;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* 最近活动区域 */
+.recent-activities {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 16px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px 0;
+  border-bottom: 1px solid #E9ECEF;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.activity-meta {
+  margin-bottom: 4px;
+}
+
+.activity-user {
+  font-size: 12px;
+  color: #007BFF;
+  font-weight: 500;
+}
+
+.activity-role {
+  font-size: 12px;
+  color: #999999;
+  margin-left: 4px;
+}
+
+.activity-time {
+  font-size: 12px;
+  color: #999999;
+}
+
+/* 加载更多区域 */
+.load-more {
+  padding: 16px 0;
+  text-align: center;
+  border-top: 1px solid #E9ECEF;
+}
+
+.loading-text,
+.load-more-text,
+.no-more-text {
+  font-size: 14px;
+  color: #999999;
+}
+
+.loading-text {
+  color: #007BFF;
+}
+
+.load-more-text {
+  color: #007BFF;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 16px;
+  background: rgba(0, 123, 255, 0.1);
+  border: 1px solid rgba(0, 123, 255, 0.2);
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.load-more-text:active {
+  background: rgba(0, 123, 255, 0.2);
+}
+
+.no-more-text {
+  color: #CCCCCC;
+}
+
+
+/* 无活动提示 */
+.no-activities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  color: #999999;
+  text-align: center;
+}
+
+.no-activities icon {
+  margin-bottom: 12px;
+}
+
+.no-activities text {
+  font-size: 14px;
+}
+
+/* 响应式设计 */
+@media (max-width: 375px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .stat-card {
+    padding: 14px 10px;
+    min-height: 90px;
+  }
+  
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .stat-number {
+    font-size: 20px;
+  }
+  
+  .stat-label {
+    font-size: 11px;
+  }
+  
+  .more-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .load-more-text {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+

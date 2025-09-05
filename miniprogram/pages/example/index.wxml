@@ -1,0 +1,4 @@
+<!--pages/example/index.wxml-->
+<view class="container">
+  <view class="message">{{message}}</view>
+</view>

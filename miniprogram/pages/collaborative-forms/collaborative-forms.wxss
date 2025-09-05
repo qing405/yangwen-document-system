@@ -1,0 +1,643 @@
+/* 协作表单中心样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 0;
+}
+
+/* 页面头部 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx 30rpx;
+  color: white;
+  position: relative;
+}
+
+.header-content {
+  margin-bottom: 20rpx;
+}
+
+.header-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+
+.header-subtitle {
+  display: block;
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.header-actions {
+  display: flex;
+  gap: 20rpx;
+  align-items: center;
+}
+
+.create-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  border-radius: 50rpx;
+  padding: 20rpx 30rpx;
+  color: white;
+  font-size: 28rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.create-btn-text {
+  color: white;
+}
+
+/* 表单列表区域 */
+.forms-section {
+  padding: 30rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.refresh-btn {
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 20rpx;
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+  margin-left: 20rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-count {
+  font-size: 28rpx;
+  color: #666;
+  margin-left: 10rpx;
+}
+
+.forms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.form-item {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.form-item:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.12);
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.form-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.form-status {
+  font-size: 24rpx;
+  font-weight: 500;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  white-space: nowrap;
+}
+
+.form-description {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+}
+
+.form-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  margin-bottom: 24rpx;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.meta-label {
+  font-size: 24rpx;
+  color: #999;
+  min-width: 120rpx;
+}
+
+.meta-value {
+  font-size: 24rpx;
+  color: #333;
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 16rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-btn.primary {
+  background: #007BFF;
+  color: white;
+}
+
+.action-btn.primary:active {
+  background: #0056b3;
+}
+
+.action-btn.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.action-btn.secondary:active {
+  background: #545b62;
+}
+
+.action-btn.info {
+  background: #17a2b8;
+  color: white;
+}
+
+.action-btn.info:active {
+  background: #138496;
+}
+
+.action-btn.warning {
+  background: #ffc107;
+  color: #212529;
+}
+
+.action-btn.warning:active {
+  background: #e0a800;
+}
+
+.action-btn.danger {
+  background: #dc3545;
+  color: white;
+}
+
+.action-btn.danger:active {
+  background: #c82333;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 0 auto 30rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  display: block;
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.empty-hint {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  line-height: 1.5;
+}
+
+/* 模态框样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16rpx;
+  margin: 40rpx;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #e9ecef;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+  cursor: pointer;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body {
+  padding: 30rpx;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #e9ecef;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 24rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-btn.primary {
+  background: #007BFF;
+  color: white;
+}
+
+.modal-btn.primary:active {
+  background: #0056b3;
+}
+
+.modal-btn.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.modal-btn.secondary:active {
+  background: #545b62;
+}
+
+/* 表单组样式 */
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.form-input {
+  width: 100%;
+  padding: 24rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  background: white;
+}
+
+.form-input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 24rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  background: white;
+  min-height: 120rpx;
+  resize: vertical;
+}
+
+.form-textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.form-picker {
+  width: 100%;
+  padding: 24rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  background: white;
+}
+
+.picker-text {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 文档上传样式 */
+.document-upload {
+  border: 2rpx dashed #007BFF;
+  border-radius: 12rpx;
+  padding: 40rpx;
+  text-align: center;
+  background: rgba(0, 123, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.document-upload:active {
+  background: rgba(0, 123, 255, 0.1);
+  border-color: #0056b3;
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.upload-text {
+  font-size: 28rpx;
+  color: #007BFF;
+  font-weight: 500;
+}
+
+.upload-hint {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+.document-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  background: white;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #e9ecef;
+}
+
+.document-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  flex: 1;
+}
+
+.document-reupload {
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6rpx;
+  padding: 12rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.document-reupload:active {
+  background: #0056b3;
+}
+
+/* 分发表单信息 */
+.distribute-form-info {
+  background: #f8f9fa;
+  padding: 24rpx;
+  border-radius: 8rpx;
+  margin-bottom: 30rpx;
+}
+
+.form-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.form-description {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 用户选择样式 */
+.users-section {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.users-list {
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  margin-bottom: 12rpx;
+  background: white;
+  border: 1rpx solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.user-item:active {
+  background: #f8f9fa;
+}
+
+.user-item.selected {
+  background: #e6f7ff;
+  border-color: #007BFF;
+}
+
+.user-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: #f0f0f0;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.user-role {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.user-selected {
+  color: #007BFF;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .header {
+    padding: 30rpx 20rpx 20rpx;
+  }
+  
+  .header-title {
+    font-size: 40rpx;
+  }
+  
+  .header-subtitle {
+    font-size: 24rpx;
+  }
+  
+  .forms-section {
+    padding: 20rpx;
+  }
+  
+  .form-item {
+    padding: 20rpx;
+  }
+  
+  .form-title {
+    font-size: 32rpx;
+  }
+  
+  .form-description {
+    font-size: 26rpx;
+  }
+  
+  .form-actions {
+    flex-wrap: wrap;
+    gap: 10rpx;
+  }
+  
+  .action-btn {
+    font-size: 24rpx;
+    padding: 12rpx 20rpx;
+  }
+  
+  .modal-content {
+    margin: 20rpx;
+    max-width: 95vw;
+  }
+  
+  .modal-title {
+    font-size: 32rpx;
+  }
+  
+  .form-input, .form-textarea {
+    font-size: 26rpx;
+  }
+  
+  .form-label {
+    font-size: 26rpx;
+  }
+}
+
+/* 简化信息样式 */
+.simplified-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10rpx;
+  background: #f0f8ff;
+  border: 1rpx solid #d1e7ff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+}
+
+.info-text {
+  font-size: 26rpx;
+  color: #0066cc;
+  line-height: 1.5;
+  flex: 1;
+}

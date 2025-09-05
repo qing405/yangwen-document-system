@@ -1,0 +1,114 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-section">
+    <view class="user-info">
+      <view class="user-avatar">
+        <view class="avatar-icon">
+          <text class="avatar-text">{{userInfo.name ? userInfo.name.charAt(0) : '用'}}</text>
+        </view>
+      </view>
+      <view class="user-details">
+        <view class="user-name">{{userInfo.name || '用户'}}</view>
+        <view class="user-role">{{userInfo.department || '部门'}} · {{userInfo.roleDisplay || '角色'}}</view>
+      </view>
+    </view>
+    <view class="welcome-text">欢迎使用原料文档管理系统</view>
+    
+    <!-- 当前日期和时间 -->
+    <view class="datetime-section">
+      <view class="current-date">{{currentDate}}</view>
+      <view class="current-time">{{currentTime}}</view>
+    </view>
+  </view>
+  
+  <!-- 统计信息卡片 -->
+  <view class="stats-section">
+    <view class="section-title">
+      <icon name="statistics" size="20" color="#1E3A68"></icon>
+      <text>系统统计</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stat-card" hover-class="stat-card-hover">
+        <view class="stat-icon">
+          <icon name="documents" size="24" color="#007BFF"></icon>
+        </view>
+        <view class="stat-content">
+          <view class="stat-number">{{stats.documentCount || 0}}</view>
+          <view class="stat-label">文档总数</view>
+        </view>
+      </view>
+      
+      <view class="stat-card" hover-class="stat-card-hover">
+        <view class="stat-icon">
+          <icon name="forms" size="24" color="#007BFF"></icon>
+        </view>
+        <view class="stat-content">
+          <view class="stat-number">{{stats.formCount || 0}}</view>
+          <view class="stat-label">表单总数</view>
+        </view>
+      </view>
+      
+      <view class="stat-card" hover-class="stat-card-hover">
+        <view class="stat-icon">
+          <icon name="records" size="24" color="#007BFF"></icon>
+        </view>
+        <view class="stat-content">
+          <view class="stat-number">{{stats.submissionCount || 0}}</view>
+          <view class="stat-label">提交总数</view>
+        </view>
+      </view>
+      
+      <view class="stat-card" hover-class="stat-card-hover">
+        <view class="stat-icon">
+          <icon name="user-management" size="24" color="#007BFF"></icon>
+        </view>
+        <view class="stat-content">
+          <view class="stat-number">{{stats.userCount || 0}}</view>
+          <view class="stat-label">用户总数</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近活动区域 -->
+  <view class="recent-activities">
+    <view class="section-header">
+      <view class="section-title">
+        <icon name="form-fill" size="20" color="#1E3A68"></icon>
+        <text>最近活动</text>
+      </view>
+      <view class="header-actions">
+        <view class="more-btn" bindtap="goToActivityHistory" wx:if="{{hasMoreActivities}}">
+          <text>更多</text>
+          <icon name="arrow-right" size="14" color="#007BFF"></icon>
+        </view>
+      </view>
+    </view>
+    
+    <view class="activities-list">
+      <!-- 有活动时显示活动列表 -->
+      <view wx:if="{{recentActivities && recentActivities.length > 0}}">
+        <view class="activity-item" wx:for="{{recentActivities}}" wx:key="id">
+          <view class="activity-icon" style="background: {{item.color}}20;">
+            <icon name="{{item.icon}}" size="16" color="{{item.color}}"></icon>
+          </view>
+          <view class="activity-content">
+            <view class="activity-title">{{item.title}}</view>
+            <view class="activity-meta">
+              <text class="activity-user">{{item.user}}</text>
+              <text class="activity-role">({{item.userRole}})</text>
+            </view>
+            <view class="activity-time">{{item.relativeTime}}</view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 无活动时的提示 -->
+      <view class="no-activities" wx:else>
+        <icon name="warning" size="32" color="#CCCCCC"></icon>
+        <text>暂无最近活动</text>
+      </view>
+    </view>
+  </view>
+</view>

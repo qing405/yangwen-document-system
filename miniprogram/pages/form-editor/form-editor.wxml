@@ -1,0 +1,379 @@
+<!--pages/form-editor/form-editor.wxml-->
+<view class="container">
+  <!-- 头部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <icon name="arrow-left" size="20" color="#FFFFFF"></icon>
+    </view>
+    <view class="header-title">
+      <text>编辑表单</text>
+    </view>
+    <view class="header-right">
+      <view class="header-action" bindtap="previewForm">
+        <icon name="eye" size="14" color="#FFFFFF"></icon>
+        <text>预览</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 表单基本信息 -->
+  <view class="form-info-section">
+    <view class="section-title">
+      <icon name="form-fill" size="16" color="#007BFF"></icon>
+      <text>基本信息</text>
+    </view>
+    
+    <view class="form-input-group">
+      <text class="input-label">表单标题</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入表单标题"
+        value="{{formData.title}}"
+        bindinput="onTitleInput"
+      />
+    </view>
+    
+    <view class="form-input-group">
+      <text class="input-label">表单描述</text>
+      <textarea 
+        class="form-input form-textarea" 
+        placeholder="请输入表单描述"
+        value="{{formData.description}}"
+        bindinput="onDescriptionInput"
+      ></textarea>
+    </view>
+    
+    <view class="form-input-group">
+      <text class="input-label">表单类型</text>
+             <picker 
+         class="form-input form-select"
+         mode="selector" 
+         range="{{formTypes}}" 
+         range-key="label"
+         value="{{formTypeIndex}}"
+         bindchange="onTypeChange"
+       >
+         <view class="picker-text">
+           {{formTypes[formTypeIndex].label}}
+         </view>
+       </picker>
+    </view>
+  </view>
+
+  <!-- 字段类型选择 -->
+  <view class="field-types-section">
+    <view class="section-title">
+      <icon name="plus" size="16" color="#007BFF"></icon>
+      <text>添加字段</text>
+    </view>
+    
+    <view class="field-types-grid">
+      <view 
+        class="field-type-item"
+        wx:for="{{fieldTypes}}" 
+        wx:key="value"
+        bindtap="addField"
+        data-type="{{item.value}}"
+      >
+        <view class="field-type-icon">
+          <icon name="{{item.icon}}" size="16" color="#007BFF"></icon>
+        </view>
+        <text class="field-type-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 字段列表 -->
+  <view class="fields-section">
+    <view class="fields-header">
+      <view class="section-title">
+        <icon name="list" size="16" color="#007BFF"></icon>
+        <text>字段列表</text>
+      </view>
+      <view class="fields-count">
+        <text>{{formData.fields.length}} 个字段</text>
+      </view>
+    </view>
+    
+    <view wx:if="{{formData.fields.length === 0}}" class="empty-fields">
+      <view class="empty-fields-icon">
+        <icon name="form-fill" size="48" color="#CBD5E1"></icon>
+      </view>
+      <text class="empty-fields-title">暂无字段</text>
+              <text class="empty-fields-desc">点击上方添加字段类型来编辑表单</text>
+    </view>
+    
+    <view wx:else class="fields-list">
+      <view 
+        class="field-item"
+        wx:for="{{formData.fields}}" 
+        wx:key="id"
+      >
+                 <view class="field-icon">
+           <icon name="{{item.typeInfo.icon}}" size="16" color="#007BFF"></icon>
+         </view>
+         
+         <view class="field-content">
+           <text class="field-label">{{item.label}}</text>
+           <text class="field-type">{{item.typeInfo.label}}</text>
+         </view>
+        
+        <view class="field-actions">
+          <view class="field-action move" bindtap="moveField" data-index="{{index}}" data-direction="up" wx:if="{{index > 0}}">
+            <icon name="arrow-up" size="14" color="#64748B"></icon>
+          </view>
+          <view class="field-action move" bindtap="moveField" data-index="{{index}}" data-direction="down" wx:if="{{index < formData.fields.length - 1}}">
+            <icon name="arrow-down" size="14" color="#64748B"></icon>
+          </view>
+          <view class="field-action edit" bindtap="editField" data-index="{{index}}">
+            <icon name="edit" size="14" color="#007BFF"></icon>
+          </view>
+          <view class="field-action delete" bindtap="deleteField" data-index="{{index}}">
+            <icon name="delete" size="14" color="#EF4444"></icon>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 表单设置 -->
+  <view class="settings-section">
+    <view class="section-title">
+      <icon name="settings" size="16" color="#007BFF"></icon>
+      <text>表单设置</text>
+    </view>
+    
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="user" size="16" color="#64748B"></icon>
+        <text>允许匿名提交</text>
+        <view class="setting-desc">用户无需登录即可提交表单</view>
+      </view>
+      <switch 
+        checked="{{formData.settings.allowAnonymous}}"
+        bindchange="toggleSetting"
+        data-setting="allowAnonymous"
+        color="#007BFF"
+      ></switch>
+    </view>
+    
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="lock" size="16" color="#64748B"></icon>
+        <text>要求登录</text>
+        <view class="setting-desc">用户必须登录后才能提交表单</view>
+      </view>
+      <switch 
+        checked="{{formData.settings.requireLogin}}"
+        bindchange="toggleSetting"
+        data-setting="requireLogin"
+        color="#007BFF"
+      ></switch>
+    </view>
+    
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="repeat" size="16" color="#64748B"></icon>
+        <text>允许多次提交</text>
+        <view class="setting-desc">同一用户可多次提交表单</view>
+      </view>
+      <switch 
+        checked="{{formData.settings.allowMultiple}}"
+        bindchange="toggleSetting"
+        data-setting="allowMultiple"
+        color="#007BFF"
+      ></switch>
+    </view>
+    
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="chart" size="16" color="#64748B"></icon>
+        <text>显示进度条</text>
+        <view class="setting-desc">在表单中显示填写进度</view>
+      </view>
+      <switch 
+        checked="{{formData.settings.showProgress}}"
+        bindchange="toggleSetting"
+        data-setting="showProgress"
+        color="#007BFF"
+      ></switch>
+    </view>
+    
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="save" size="16" color="#64748B"></icon>
+        <text>自动保存</text>
+        <view class="setting-desc">自动保存用户填写的内容</view>
+      </view>
+      <switch 
+        checked="{{formData.settings.autoSave}}"
+        bindchange="toggleSetting"
+        data-setting="autoSave"
+        color="#007BFF"
+      ></switch>
+    </view>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="bottom-actions">
+    <button class="action-btn secondary" bindtap="goBack">
+      <icon name="close" size="16" color="#64748B"></icon>
+      <text>取消</text>
+    </button>
+    
+    <button class="action-btn primary" bindtap="saveForm" wx:if="{{mode === 'create'}}">
+      <icon name="save" size="16" color="#FFFFFF"></icon>
+      <text>保存</text>
+    </button>
+    
+    <button class="action-btn success" bindtap="publishForm" wx:if="{{mode === 'create'}}">
+      <icon name="send" size="16" color="#FFFFFF"></icon>
+      <text>发布</text>
+    </button>
+    
+    <button class="action-btn primary" bindtap="saveForm" wx:if="{{mode === 'edit'}}">
+      <icon name="save" size="16" color="#FFFFFF"></icon>
+      <text>更新</text>
+    </button>
+  </view>
+
+  <!-- 字段编辑器弹窗 -->
+  <view wx:if="{{showFieldEditor}}" class="modal-overlay" bindtap="cancelFieldEdit">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">编辑字段</text>
+        <view class="close-btn" bindtap="cancelFieldEdit">
+          <icon name="close" size="20" color="#64748B"></icon>
+        </view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="field-editor-form">
+          <view class="form-input-group">
+            <text class="input-label">字段标签</text>
+            <input 
+              class="form-input" 
+              placeholder="请输入字段标签"
+              value="{{editingField.label}}"
+              bindinput="onFieldSettingChange"
+              data-field="{{editingField}}"
+              data-setting="label"
+            />
+          </view>
+          
+          <view class="form-input-group">
+            <text class="input-label">占位符文本</text>
+            <input 
+              class="form-input" 
+              placeholder="请输入占位符文本"
+              value="{{editingField.placeholder}}"
+              bindinput="onFieldSettingChange"
+              data-field="{{editingField}}"
+              data-setting="placeholder"
+            />
+          </view>
+          
+          <view class="form-input-group">
+            <label class="checkbox-label">
+              <input 
+                type="checkbox" 
+                checked="{{editingField.required}}"
+                bindchange="onFieldSettingChange"
+                data-field="{{editingField}}"
+                data-setting="required"
+              />
+              <text>必填字段</text>
+            </label>
+          </view>
+          
+          <view class="form-input-group" wx:if="{{editingFieldNeedsOptions}}">
+            <text class="input-label">选项列表</text>
+            <textarea 
+              class="form-input form-textarea" 
+              placeholder="每行一个选项"
+              value="{{editingField.optionsText}}"
+              bindinput="onFieldSettingChange"
+              data-field="{{editingField}}"
+              data-setting="options"
+            ></textarea>
+          </view>
+        </view>
+        
+        <view class="modal-actions">
+          <button class="modal-btn secondary" bindtap="cancelFieldEdit">取消</button>
+          <button class="modal-btn primary" bindtap="saveFieldEdit">保存</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预览弹窗 -->
+  <view wx:if="{{showPreview}}" class="modal-overlay" bindtap="closePreview">
+    <view class="modal-content preview-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">表单预览</text>
+        <view class="close-btn" bindtap="closePreview">
+          <icon name="close" size="20" color="#64748B"></icon>
+        </view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="preview-form">
+          <view class="preview-form-header">
+            <text class="preview-form-title">{{formData.title}}</text>
+            <text class="preview-form-desc">{{formData.description}}</text>
+          </view>
+          
+          <view class="preview-form-fields">
+            <view 
+              class="preview-field"
+              wx:for="{{previewFields}}" 
+              wx:key="id"
+            >
+              <text class="preview-field-label">
+                {{item.label}}
+                <text wx:if="{{item.required}}" class="required-mark">*</text>
+              </text>
+              
+              <view class="preview-field-input">
+                <input 
+                  wx:if="{{item.type === 'text'}}"
+                  class="preview-input" 
+                  placeholder="{{item.placeholder}}"
+                />
+                <textarea 
+                  wx:elif="{{item.type === 'textarea'}}"
+                  class="preview-textarea" 
+                  placeholder="{{item.placeholder}}"
+                ></textarea>
+                <picker 
+                  wx:elif="{{item.type === 'select'}}"
+                  class="preview-picker"
+                  mode="selector" 
+                  range="{{item.options}}"
+                >
+                  <view class="preview-picker-text">{{item.displayPlaceholder}}</view>
+                </picker>
+                <view wx:elif="{{item.type === 'rating'}}" class="preview-rating-input">
+                  <view class="preview-rating-stars">
+                    <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="preview-star">★</text>
+                  </view>
+                </view>
+                <view wx:elif="{{item.type === 'file'}}" class="preview-file-input">
+                  <view class="preview-file-upload">
+                    <icon name="upload" size="24" color="#CBD5E1"></icon>
+                    <text>点击上传文件</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          
+          <view class="preview-form-submit">
+            <button class="preview-submit-btn">提交表单</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

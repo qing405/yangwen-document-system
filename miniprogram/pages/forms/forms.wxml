@@ -1,0 +1,131 @@
+<!--pages/forms/forms.wxml-->
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="header-title">
+        <icon name="forms" size="32" color="#FFFFFF"></icon>
+        <text class="title-text">表单中心</text>
+      </view>
+      <view class="header-subtitle">高效管理，智能协作</view>
+      <view class="header-stats">
+        <view class="header-stat">
+          <text class="stat-number">{{statistics.completionRate}}%</text>
+          <text class="stat-label">整体完成率</text>
+        </view>
+      </view>
+    </view>
+    <view class="header-decoration">
+      <view class="decoration-circle circle-1"></view>
+      <view class="decoration-circle circle-2"></view>
+      <view class="decoration-circle circle-3"></view>
+    </view>
+  </view>
+
+  <!-- 功能按钮区域 -->
+  <view class="actions-container">
+    <view 
+      class="action-btn primary" 
+      bindtap="onActionButtonTap"
+      data-id="collaborative"
+    >
+      <view class="action-icon">
+        <icon name="form-fill" size="28" color="#FFFFFF"></icon>
+      </view>
+      <view class="action-content">
+        <text class="action-text">协作表单</text>
+        <text class="action-desc">在线协作填写表单</text>
+      </view>
+      <view class="action-badge">协作</view>
+    </view>
+    
+    <view 
+      class="action-btn secondary" 
+      bindtap="onActionButtonTap"
+      data-id="assign"
+    >
+      <view class="action-icon">
+        <icon name="user-management" size="28" color="#FFFFFF"></icon>
+      </view>
+      <view class="action-content">
+        <text class="action-text">分派任务</text>
+        <text class="action-desc">分配表单给用户</text>
+      </view>
+      <view class="action-badge">分派</view>
+    </view>
+    
+    <view 
+      class="action-btn tertiary" 
+      bindtap="onActionButtonTap"
+      data-id="query"
+    >
+      <view class="action-icon">
+        <icon name="statistics" size="28" color="#FFFFFF"></icon>
+      </view>
+      <view class="action-content">
+        <text class="action-text">查询任务</text>
+        <text class="action-desc">查看任务进度</text>
+      </view>
+      <view class="action-badge">查询</view>
+    </view>
+  </view>
+
+  <!-- 统计概览区域 -->
+  <view class="overview-section">
+    <view class="overview-header">
+      <view class="overview-title-section">
+        <text class="overview-title">统计概览</text>
+        <text class="overview-subtitle">实时数据更新</text>
+      </view>
+      <view class="overview-actions">
+        <view class="refresh-btn" bindtap="refreshData">
+          <icon name="refresh" size="16" color="#FFFFFF"></icon>
+        </view>
+      </view>
+    </view>
+    
+    <view class="overview-grid">
+      <view class="overview-card primary">
+        <view class="overview-icon">
+          <icon name="check-circle" size="24" color="#10B981"></icon>
+        </view>
+        <view class="overview-content">
+          <text class="overview-value">{{statistics.completionRate}}%</text>
+          <text class="overview-label">完成率</text>
+          <view class="overview-trend positive">
+            <icon name="arrow-up" size="12" color="#10B981"></icon>
+            <text>+5.2%</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="overview-card secondary">
+        <view class="overview-icon">
+          <icon name="clock" size="24" color="#F59E0B"></icon>
+        </view>
+        <view class="overview-content">
+          <text class="overview-value">{{statistics.activeTasks}}</text>
+          <text class="overview-label">进行中</text>
+          <view class="overview-trend neutral">
+            <icon name="minus" size="12" color="#64748B"></icon>
+            <text>0%</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="overview-card tertiary">
+        <view class="overview-icon">
+          <icon name="alert-circle" size="24" color="#EF4444"></icon>
+        </view>
+        <view class="overview-content">
+          <text class="overview-value">{{statistics.overdueTasks}}</text>
+          <text class="overview-label">逾期</text>
+          <view class="overview-trend negative">
+            <icon name="arrow-down" size="12" color="#EF4444"></icon>
+            <text>-2.1%</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

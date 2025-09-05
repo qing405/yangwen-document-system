@@ -1,0 +1,343 @@
+/* pages/profile/profile.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 0;
+}
+
+/* 用户信息区域 */
+.profile-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx 30rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景装饰 */
+.header-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 6s ease-in-out infinite;
+}
+
+.circle-1 {
+  width: 120rpx;
+  height: 120rpx;
+  top: -60rpx;
+  right: -60rpx;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 80rpx;
+  height: 80rpx;
+  bottom: -40rpx;
+  left: -40rpx;
+  animation-delay: 2s;
+}
+
+.circle-3 {
+  width: 60rpx;
+  height: 60rpx;
+  top: 50%;
+  right: 20rpx;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20rpx) rotate(180deg);
+  }
+}
+
+.user-info-card {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 30rpx;
+}
+
+.avatar-container {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4rpx solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20rpx);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.avatar-text {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+.avatar-badge {
+  position: absolute;
+  bottom: -4rpx;
+  right: -4rpx;
+  width: 36rpx;
+  height: 36rpx;
+  background: #4CAF50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4rpx solid white;
+  box-shadow: 0 4rpx 12rpx rgba(76, 175, 80, 0.3);
+}
+
+.user-status {
+  margin-top: 12rpx;
+}
+
+.status-text {
+  font-size: 20rpx;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.25);
+  padding: 6rpx 12rpx;
+  border-radius: 16rpx;
+  backdrop-filter: blur(10rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.user-details {
+  flex: 1;
+  color: white;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  margin-bottom: 16rpx;
+}
+
+.work-id, .department {
+  font-size: 24rpx;
+  opacity: 0.9;
+  text-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.role-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  padding: 8rpx 16rpx;
+  border-radius: 24rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  border: 1rpx solid rgba(255, 255, 255, 0.4);
+  display: inline-block;
+  backdrop-filter: blur(10rpx);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 功能菜单 */
+.menu-list {
+  margin: 0 30rpx 30rpx;
+  background: white;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 30rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:active {
+  background: #F8F9FA;
+  transform: scale(0.98);
+}
+
+.menu-icon {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  transition: all 0.3s ease;
+}
+
+/* 不同菜单项的图标背景色 */
+.service-icon {
+  background: rgba(25, 118, 210, 0.1);
+}
+
+.help-icon {
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.password-icon {
+  background: rgba(255, 152, 0, 0.1);
+}
+
+.account-icon {
+  background: rgba(33, 150, 243, 0.1);
+}
+
+.cache-icon {
+  background: rgba(255, 87, 34, 0.1);
+}
+
+.about-icon {
+  background: rgba(96, 125, 139, 0.1);
+}
+
+.menu-item:active .menu-icon {
+  transform: scale(1.1);
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.menu-count {
+  font-size: 24rpx;
+  color: #1976D2;
+  font-weight: 600;
+  margin-right: 12rpx;
+}
+
+.menu-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.menu-item:active .menu-arrow {
+  opacity: 1;
+  transform: translateX(4rpx);
+}
+
+/* 退出登录 */
+.logout-section {
+  margin: 0 30rpx 60rpx;
+}
+
+.logout-btn {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  border: none;
+  box-shadow: 0 8rpx 32rpx rgba(255, 107, 107, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.logout-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.logout-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 107, 0.4);
+}
+
+.logout-btn:active::before {
+  left: 100%;
+}
+
+.logout-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .profile-header {
+    padding: 30rpx 20rpx 20rpx;
+  }
+  
+  .avatar-container {
+    width: 100rpx;
+    height: 100rpx;
+  }
+  
+  .avatar-text {
+    font-size: 40rpx;
+  }
+  
+  .user-name {
+    font-size: 32rpx;
+  }
+  
+  .menu-list {
+    margin: 0 20rpx 20rpx;
+  }
+  
+  .menu-item {
+    padding: 24rpx 20rpx;
+  }
+  
+  .logout-section {
+    margin: 0 20rpx 40rpx;
+  }
+}
+

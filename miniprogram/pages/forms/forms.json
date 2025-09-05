@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "表单中心",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

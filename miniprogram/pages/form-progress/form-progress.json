@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "表单进度",
+  "navigationBarBackgroundColor": "#667eea",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f5f7fa",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

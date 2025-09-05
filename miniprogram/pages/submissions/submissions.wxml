@@ -1,0 +1,64 @@
+<!--pages/submissions/submissions.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">提交记录</view>
+    <view class="page-subtitle">查看所有表单提交记录</view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading && submissions.length === 0}}" class="loading">
+    <view class="loading-icon">⏳</view>
+    <text>加载中...</text>
+  </view>
+
+  <!-- 提交列表 -->
+  <view wx:elif="{{submissions.length > 0}}" class="submissions-list">
+    <view 
+      class="submission-item" 
+      wx:for="{{submissions}}" 
+      wx:key="_id"
+      bindtap="onViewSubmission"
+      data-id="{{item._id}}"
+    >
+      <view class="submission-header">
+        <view class="submission-title">提交 #{{item._id.slice(-8)}}</view>
+        <view class="submission-status">
+          <text class="tag tag-success">已完成</text>
+        </view>
+      </view>
+      <view class="submission-info">
+        <view class="info-row">
+          <text class="info-label">提交时间：</text>
+          <text class="info-value">{{item.submittedAt || '未知'}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">表单名称：</text>
+          <text class="info-value">{{item.formName || '未知表单'}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">提交人：</text>
+          <text class="info-value">{{item.submitterName || '未知'}}</text>
+        </view>
+      </view>
+      <view class="submission-arrow">></view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view wx:if="{{loading && submissions.length > 0}}" class="loading-more">
+      <text>加载更多...</text>
+    </view>
+
+    <!-- 没有更多数据 -->
+    <view wx:if="{{!hasMore && submissions.length > 0}}" class="no-more">
+      <text>没有更多数据了</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <view class="empty-icon">📄</view>
+    <view class="empty-text">暂无提交记录</view>
+    <view class="empty-subtitle">您还没有提交过任何表单</view>
+  </view>
+</view>

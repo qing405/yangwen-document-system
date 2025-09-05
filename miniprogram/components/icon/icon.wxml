@@ -1,0 +1,8 @@
+<!--components/icon/icon.wxml-->
+<image 
+  wx:if="{{iconPath}}"
+  src="{{iconPath}}" 
+  mode="aspectFit" 
+  style="width: {{size}}px; height: {{size}}px;"
+  class="icon-image"
+></image>

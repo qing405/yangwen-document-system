@@ -1,0 +1,109 @@
+<!--pages/profile/profile.wxml-->
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="profile-header">
+    <!-- 背景装饰 -->
+    <view class="header-decoration">
+      <view class="decoration-circle circle-1"></view>
+      <view class="decoration-circle circle-2"></view>
+      <view class="decoration-circle circle-3"></view>
+    </view>
+    
+    <view class="user-info-card">
+      <view class="avatar-section">
+        <view class="avatar-container">
+          <text class="avatar-text">{{userInfo.name[0]}}</text>
+          <view class="avatar-badge" wx:if="{{userInfo.role === 'admin'}}">
+            <icon name="success" size="12" color="#FFFFFF"></icon>
+          </view>
+        </view>
+        <view class="user-status">
+          <text class="status-text">在线</text>
+        </view>
+      </view>
+      
+      <view class="user-details">
+        <view class="user-name">{{userInfo.name}}</view>
+        <view class="user-meta">
+          <text class="work-id">{{userInfo.workId}}</text>
+          <text class="department">{{userInfo.department}}</text>
+        </view>
+        <view class="role-badge">
+          <text class="role-text">{{userInfo.role === 'admin' ? '管理员' : '普通用户'}}</text>
+        </view>
+      </view>
+      
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-list">
+    <view class="menu-item" bindtap="onContactService">
+      <view class="menu-icon service-icon">
+        <icon name="customer-service" size="16" color="#1976D2"></icon>
+      </view>
+      <text class="menu-text">联系客服</text>
+      <view class="menu-arrow">
+        <icon name="share" size="12" color="#CCCCCC"></icon>
+      </view>
+    </view>
+    
+    <view class="menu-item" bindtap="onHelp">
+      <view class="menu-icon help-icon">
+        <icon name="document-center" size="16" color="#4CAF50"></icon>
+      </view>
+      <text class="menu-text">帮助中心</text>
+      <view class="menu-arrow">
+        <icon name="share" size="12" color="#CCCCCC"></icon>
+      </view>
+    </view>
+    
+    <view class="menu-item" bindtap="onChangePassword">
+      <view class="menu-icon password-icon">
+        <icon name="setting" size="16" color="#FF9800"></icon>
+      </view>
+      <text class="menu-text">修改密码</text>
+      <view class="menu-arrow">
+        <icon name="share" size="12" color="#CCCCCC"></icon>
+      </view>
+    </view>
+    
+    <view class="menu-item" bindtap="onAccountSettings">
+      <view class="menu-icon account-icon">
+        <icon name="user-management" size="16" color="#2196F3"></icon>
+      </view>
+      <text class="menu-text">账户信息</text>
+      <view class="menu-arrow">
+        <icon name="share" size="12" color="#CCCCCC"></icon>
+      </view>
+    </view>
+    
+    <view class="menu-item" bindtap="onCacheClear">
+      <view class="menu-icon cache-icon">
+        <icon name="error" size="16" color="#FF5722"></icon>
+      </view>
+      <text class="menu-text">清理缓存</text>
+      <view class="menu-arrow">
+        <icon name="share" size="12" color="#CCCCCC"></icon>
+      </view>
+    </view>
+    
+    <view class="menu-item" bindtap="onAbout">
+      <view class="menu-icon about-icon">
+        <icon name="question" size="16" color="#607D8B"></icon>
+      </view>
+      <text class="menu-text">关于系统</text>
+      <view class="menu-arrow">
+        <icon name="share" size="12" color="#CCCCCC"></icon>
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="onLogout">
+      <icon name="error" size="16" color="#FFFFFF"></icon>
+      <text class="logout-text">退出登录</text>
+    </button>
+  </view>
+</view>

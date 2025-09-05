@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "文档中心",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#F5F7FA",
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

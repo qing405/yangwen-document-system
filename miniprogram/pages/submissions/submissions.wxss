@@ -1,0 +1,162 @@
+/* pages/submissions/submissions.wxss */
+
+/* 页面标题 */
+.page-header {
+  margin-bottom: 16px;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #666666;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666666;
+}
+
+.loading-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 提交列表 */
+.submissions-list {
+  margin-bottom: 16px;
+}
+
+.submission-item {
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submission-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.submission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.submission-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.submission-status {
+  display: flex;
+  align-items: center;
+}
+
+.submission-info {
+  margin-bottom: 8px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #666666;
+  min-width: 80px;
+  margin-right: 8px;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #333333;
+  flex: 1;
+}
+
+.submission-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #CCCCCC;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 加载更多 */
+.loading-more {
+  text-align: center;
+  padding: 20px;
+  color: #666666;
+  font-size: 14px;
+}
+
+/* 没有更多数据 */
+.no-more {
+  text-align: center;
+  padding: 20px;
+  color: #999999;
+  font-size: 14px;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: #999999;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #666666;
+}
+
+.empty-subtitle {
+  font-size: 14px;
+  color: #999999;
+}
+
+/* 标签样式 */
+.tag {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tag-success {
+  background-color: #D4EDDA;
+  color: #155724;
+}

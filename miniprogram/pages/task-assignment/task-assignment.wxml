@@ -1,0 +1,241 @@
+<!--pages/task-assignment/task-assignment.wxml-->
+<view class="container">
+  <!-- 头部导航 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <icon name="arrow-left" size="20" color="#FFFFFF"></icon>
+    </view>
+    <view class="header-title">
+      <text>分派任务</text>
+    </view>
+    <view class="header-right"></view>
+  </view>
+
+  <!-- 表单选择 -->
+  <view class="form-section">
+    <view class="section-title">
+      <text>选择表单</text>
+      <text class="required">*</text>
+    </view>
+    
+    <view class="form-selector" bindtap="showFormSelector">
+      <view wx:if="{{selectedForm}}" class="selected-form">
+        <view class="form-info">
+          <text class="form-title">{{selectedForm.title}}</text>
+          <text class="form-desc">{{selectedForm.description}}</text>
+          <view class="form-meta">
+            <text class="form-type">{{selectedForm.type}}</text>
+            <text class="form-fields">{{selectedForm.fields}}个字段</text>
+          </view>
+        </view>
+        <icon name="edit" size="16" color="#64748B"></icon>
+      </view>
+      
+      <view wx:else class="form-placeholder">
+        <icon name="form-fill" size="20" color="#CBD5E1"></icon>
+        <text>点击选择要分派的表单</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户选择 -->
+  <view class="user-section">
+    <view class="section-title">
+      <text>选择用户</text>
+      <text class="required">*</text>
+    </view>
+    
+    <view class="user-selector" bindtap="showUserSelector">
+      <view wx:if="{{selectedUsers.length > 0}}" class="selected-users">
+        <view class="user-list">
+          <view 
+            class="user-item"
+            wx:for="{{selectedUsers}}" 
+            wx:key="id"
+          >
+            <image class="user-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+            <view class="user-info">
+              <text class="user-name">{{item.name}}</text>
+              <text class="user-role">{{item.department}} - {{item.role}}</text>
+            </view>
+            <view class="remove-btn" bindtap="removeUser" data-id="{{item.id}}">
+              <icon name="close" size="14" color="#EF4444"></icon>
+            </view>
+          </view>
+        </view>
+        <icon name="edit" size="16" color="#64748B"></icon>
+      </view>
+      
+      <view wx:else class="user-placeholder">
+        <icon name="user-management" size="20" color="#CBD5E1"></icon>
+        <text>点击选择要分派的用户</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 任务设置 -->
+  <view class="settings-section">
+    <view class="section-title">
+      <text>任务设置</text>
+    </view>
+    
+    <!-- 截止日期 -->
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="calendar" size="16" color="#64748B"></icon>
+        <text>截止日期</text>
+        <text class="required">*</text>
+      </view>
+      <picker 
+        mode="date" 
+        value="{{assignmentData.deadline}}"
+        bindchange="onDateChange"
+        start="{{assignmentData.deadline}}"
+      >
+        <view class="setting-value">
+          <text wx:if="{{assignmentData.deadline}}">{{assignmentData.deadline}}</text>
+          <text wx:else class="placeholder">请选择截止日期</text>
+          <icon name="arrow-right" size="16" color="#CBD5E1"></icon>
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 优先级 -->
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="flag" size="16" color="#64748B"></icon>
+        <text>优先级</text>
+      </view>
+      <picker 
+        mode="selector" 
+        range="{{priorities}}" 
+        range-key="label"
+        value="{{priorityIndex}}"
+        bindchange="onPriorityChange"
+      >
+        <view class="setting-value">
+          <view class="priority-tag {{assignmentData.priority}}">
+            <text>{{priorityInfo.label}}</text>
+          </view>
+          <icon name="arrow-right" size="16" color="#CBD5E1"></icon>
+        </view>
+      </picker>
+    </view>
+    
+    <!-- 任务描述 -->
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="edit" size="16" color="#64748B"></icon>
+        <text>任务描述</text>
+      </view>
+      <textarea 
+        class="description-input"
+        placeholder="请输入任务描述..."
+        value="{{assignmentData.description}}"
+        bindinput="onDescriptionInput"
+        maxlength="200"
+      ></textarea>
+      <view class="char-count">{{assignmentData.description.length}}/200</view>
+    </view>
+    
+    <!-- 通知设置 -->
+    <view class="setting-item">
+      <view class="setting-label">
+        <icon name="bell" size="16" color="#64748B"></icon>
+        <text>通知用户</text>
+      </view>
+      <switch 
+        checked="{{assignmentData.notifyUsers}}"
+        bindchange="toggleNotification"
+        color="#007BFF"
+      ></switch>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="submit-btn" bindtap="submitAssignment">
+      <icon name="send" size="16" color="#FFFFFF"></icon>
+      <text>分派任务</text>
+    </button>
+  </view>
+
+  <!-- 表单选择弹窗 -->
+  <view wx:if="{{showFormSelector}}" class="modal-overlay" bindtap="hideFormSelector">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">选择表单</text>
+        <view class="close-btn" bindtap="hideFormSelector">
+          <icon name="close" size="20" color="#64748B"></icon>
+        </view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="form-list">
+          <view 
+            class="form-item {{selectedForm && selectedForm.id === item.id ? 'selected' : ''}}"
+            wx:for="{{forms}}" 
+            wx:key="id"
+            bindtap="selectForm"
+            data-id="{{item.id}}"
+          >
+            <view class="form-info">
+              <text class="form-title">{{item.title}}</text>
+              <text class="form-desc">{{item.description}}</text>
+              <view class="form-meta">
+                <text class="form-type">{{item.type}}</text>
+                <text class="form-status">{{item.status}}</text>
+              </view>
+            </view>
+            <view wx:if="{{selectedForm && selectedForm.id === item.id}}" class="selected-icon">
+              <icon name="check" size="16" color="#007BFF"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户选择弹窗 -->
+  <view wx:if="{{showUserSelector}}" class="modal-overlay" bindtap="hideUserSelector">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">选择用户</text>
+        <view class="close-btn" bindtap="hideUserSelector">
+          <icon name="close" size="20" color="#64748B"></icon>
+        </view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="search-bar">
+          <icon name="search" size="16" color="#64748B"></icon>
+          <input 
+            class="search-input" 
+            placeholder="搜索用户..." 
+            value="{{searchKeyword}}"
+            bindinput="onUserSearch"
+          />
+        </view>
+        
+        <view class="user-list">
+          <view 
+            class="user-item {{isUserSelected(item.id) ? 'selected' : ''}}"
+            wx:for="{{filteredUsers}}" 
+            wx:key="id"
+            bindtap="selectUser"
+            data-id="{{item.id}}"
+          >
+            <image class="user-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+            <view class="user-info">
+              <text class="user-name">{{item.name}}</text>
+              <text class="user-role">{{item.department}} - {{item.role}}</text>
+            </view>
+            <view wx:if="{{isUserSelected(item.id)}}" class="selected-icon">
+              <icon name="check" size="16" color="#007BFF"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

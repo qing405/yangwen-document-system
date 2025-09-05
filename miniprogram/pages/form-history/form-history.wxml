@@ -1,0 +1,50 @@
+<!--pages/form-history/form-history.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">提交历史</view>
+    <view class="page-subtitle">{{formTitle}}</view>
+  </view>
+
+  <!-- 历史记录列表 -->
+  <view class="history-list">
+    <view wx:if="{{submissions.length === 0 && !loading}}" class="empty-state">
+      <view class="empty-icon">📊</view>
+      <view class="empty-text">暂无提交记录</view>
+    </view>
+    
+    <view wx:else>
+      <view 
+        class="history-item list-item" 
+        wx:for="{{submissions}}" 
+        wx:key="_id"
+        bindtap="onViewSubmission"
+        data-id="{{item._id}}"
+      >
+        <view class="list-item-content">
+          <view class="list-item-title">提交 #{{item.submissionId}}</view>
+          <view class="list-item-desc">
+            <text class="text-muted">提交人：{{item.submitterName}}</text>
+            <text class="text-muted">{{item.submittedAt}}</text>
+          </view>
+          <view class="list-item-meta">
+            <text class="tag tag-success">已完成</text>
+            <text class="text-muted">字段数：{{item.fieldCount || 0}}</text>
+          </view>
+        </view>
+        <view class="list-item-arrow">
+          <text class="arrow-icon">></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+  
+  <view wx:if="{{!hasMore && submissions.length > 0}}" class="no-more">
+    <text>没有更多了</text>
+  </view>
+</view>

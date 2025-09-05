@@ -1,0 +1,333 @@
+/* pages/form-fill/form-fill.wxss */
+
+.container {
+  min-height: 100vh;
+  background: #F8FAFC;
+}
+
+/* 头部导航 */
+.header {
+  background: linear-gradient(135deg, #007BFF 0%, #0056B3 100%);
+  padding: 40rpx 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FFFFFF;
+}
+
+.header-left {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.document-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 80rpx 40rpx;
+  color: #64748B;
+  font-size: 28rpx;
+}
+
+/* 表单内容 */
+.form-content {
+  padding: 32rpx;
+}
+
+/* 表单信息 */
+.form-info {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 16rpx;
+}
+
+.form-description {
+  font-size: 28rpx;
+  color: #64748B;
+  line-height: 1.5;
+  margin-bottom: 24rpx;
+}
+
+.form-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.meta-label {
+  font-size: 26rpx;
+  color: #64748B;
+  min-width: 120rpx;
+}
+
+.meta-value {
+  font-size: 26rpx;
+  color: #334155;
+  flex: 1;
+}
+
+.priority-high {
+  color: #DC2626;
+  font-weight: 500;
+}
+
+.priority-medium {
+  color: #D97706;
+  font-weight: 500;
+}
+
+.priority-low {
+  color: #059669;
+  font-weight: 500;
+}
+
+/* 表单字段 */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+.field-group {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.field-label {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #E2E8F0;
+}
+
+.field-item {
+  margin-bottom: 32rpx;
+}
+
+.field-item:last-child {
+  margin-bottom: 0;
+}
+
+.field-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 12rpx;
+}
+
+.field-input {
+  width: 100%;
+  padding: 24rpx;
+  border: 2rpx solid #E2E8F0;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #334155;
+  background: #FFFFFF;
+}
+
+.field-input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.field-textarea {
+  width: 100%;
+  padding: 24rpx;
+  border: 2rpx solid #E2E8F0;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #334155;
+  background: #FFFFFF;
+  min-height: 200rpx;
+  resize: vertical;
+}
+
+.field-textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.field-hint {
+  font-size: 24rpx;
+  color: #94A3B8;
+  margin-top: 8rpx;
+  text-align: right;
+}
+
+/* 上传区域 */
+.upload-area {
+  border: 2rpx dashed #007BFF;
+  border-radius: 12rpx;
+  padding: 40rpx;
+  text-align: center;
+  background: rgba(0, 123, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.upload-area:active {
+  background: rgba(0, 123, 255, 0.1);
+  border-color: #0056b3;
+}
+
+.upload-text {
+  display: block;
+  font-size: 28rpx;
+  color: #007BFF;
+  font-weight: 500;
+  margin: 16rpx 0 8rpx;
+}
+
+.upload-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* 附件列表 */
+.attachment-list {
+  margin-top: 16rpx;
+}
+
+.attachment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F8FAFC;
+  padding: 16rpx 20rpx;
+  border-radius: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.attachment-name {
+  font-size: 26rpx;
+  color: #334155;
+  flex: 1;
+}
+
+.remove-attachment {
+  background: #EF4444;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6rpx;
+  padding: 8rpx 16rpx;
+  font-size: 22rpx;
+}
+
+.remove-attachment:active {
+  background: #DC2626;
+}
+
+/* 提交区域 */
+.submit-section {
+  padding: 32rpx 0 60rpx;
+}
+
+.submit-btn {
+  width: 100%;
+  background: #007BFF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:active {
+  background: #0056B3;
+}
+
+.submit-btn.submitting {
+  background: #94A3B8;
+}
+
+.submit-btn[disabled] {
+  background: #94A3B8;
+  color: #FFFFFF;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .header {
+    padding: 30rpx 24rpx;
+  }
+  
+  .header-title {
+    font-size: 32rpx;
+  }
+  
+  .form-content {
+    padding: 24rpx;
+  }
+  
+  .form-info, .field-group {
+    padding: 24rpx;
+  }
+  
+  .form-title {
+    font-size: 32rpx;
+  }
+  
+  .field-label {
+    font-size: 28rpx;
+  }
+  
+  .field-name {
+    font-size: 26rpx;
+  }
+  
+  .field-input, .field-textarea {
+    font-size: 26rpx;
+    padding: 20rpx;
+  }
+  
+  .submit-btn {
+    font-size: 28rpx;
+    padding: 28rpx;
+  }
+}

@@ -1,0 +1,487 @@
+/* 表单进度查看页面样式 */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 0;
+  position: relative;
+}
+
+/* 页面头部 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx 30rpx;
+  color: white;
+  position: relative;
+}
+
+.header-content {
+  margin-bottom: 20rpx;
+}
+
+.header-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+
+.header-subtitle {
+  display: block;
+  font-size: 28rpx;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.export-btn {
+  position: absolute;
+  top: 40rpx;
+  right: 30rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2rpx solid rgba(255, 255, 255, 0.3);
+  border-radius: 50rpx;
+  padding: 20rpx 30rpx;
+  color: white;
+  font-size: 28rpx;
+  backdrop-filter: blur(10rpx);
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+/* 进度统计 */
+.progress-stats {
+  padding: 30rpx;
+  background: white;
+  margin: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 15rpx;
+  border: 2rpx solid #ecf0f1;
+}
+
+.stat-number {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #7f8c8d;
+}
+
+/* 进度条 */
+.progress-bar {
+  width: 100%;
+  height: 20rpx;
+  background: #ecf0f1;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+  border-radius: 10rpx;
+  transition: width 0.5s ease;
+}
+
+/* 用户列表区域 */
+.users-section {
+  padding: 0 30rpx 30rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.section-count {
+  font-size: 28rpx;
+  color: #7f8c8d;
+  margin-left: 10rpx;
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.user-item {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: 3rpx solid #ecf0f1;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8rpx;
+}
+
+.user-id {
+  display: block;
+  font-size: 24rpx;
+  color: #7f8c8d;
+  margin-bottom: 5rpx;
+}
+
+.user-department {
+  display: block;
+  font-size: 24rpx;
+  color: #7f8c8d;
+}
+
+.user-status {
+  margin-bottom: 20rpx;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  background: rgba(0, 123, 255, 0.1);
+  margin-bottom: 10rpx;
+}
+
+.submit-time, .distribute-time {
+  display: block;
+  font-size: 24rpx;
+  color: #7f8c8d;
+  margin-bottom: 5rpx;
+}
+
+.user-actions {
+  display: flex;
+  gap: 15rpx;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 16rpx 24rpx;
+  border-radius: 25rpx;
+  font-size: 24rpx;
+  border: none;
+  min-width: 120rpx;
+}
+
+.action-btn.info {
+  background: #17a2b8;
+  color: white;
+}
+
+.action-btn.warning {
+  background: #ffc107;
+  color: #212529;
+}
+
+.action-btn.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+  background: white;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.empty-icon {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  display: block;
+  font-size: 32rpx;
+  color: #7f8c8d;
+  margin-bottom: 15rpx;
+}
+
+.empty-hint {
+  display: block;
+  font-size: 28rpx;
+  color: #bdc3c7;
+}
+
+/* 导出模态框 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40rpx;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20rpx;
+  width: 100%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #ecf0f1;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: #95a5a6;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 30rpx;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #ecf0f1;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.modal-btn.primary {
+  background: #007bff;
+  color: white;
+}
+
+.modal-btn.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+/* 导出选项 */
+.export-options {
+  margin-bottom: 20rpx;
+}
+
+.option-group {
+  margin-bottom: 30rpx;
+}
+
+.option-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 20rpx;
+}
+
+.format-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.format-option {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  padding: 15rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.format-option:hover {
+  background: #e9ecef;
+  border-color: #007bff;
+}
+
+.format-option text {
+  font-size: 28rpx;
+  color: #2c3e50;
+}
+
+/* 导出预览 */
+.export-preview {
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 15rpx;
+}
+
+.preview-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 15rpx;
+}
+
+.preview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.preview-item {
+  font-size: 24rpx;
+  color: #7f8c8d;
+}
+
+/* 加载状态 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 30rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #7f8c8d;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .header {
+    padding: 30rpx 20rpx 20rpx;
+  }
+  
+  .export-btn {
+    position: static;
+    margin-top: 20rpx;
+    width: 100%;
+  }
+  
+  .progress-stats {
+    margin: 20rpx;
+    padding: 20rpx;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15rpx;
+  }
+  
+  .users-section {
+    padding: 0 20rpx 20rpx;
+  }
+  
+  .user-item {
+    padding: 20rpx;
+  }
+  
+  .user-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .user-actions {
+    flex-direction: column;
+  }
+  
+  .action-btn {
+    width: 100%;
+  }
+  
+  .modal-overlay {
+    padding: 20rpx;
+  }
+  
+  .modal-content {
+    max-width: 100%;
+  }
+}

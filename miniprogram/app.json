@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/documents/documents",
+    "pages/document-detail/document-detail",
+    "pages/forms/forms",
+    "pages/form-detail/form-detail",
+    "pages/form-history/form-history",
+    "pages/submissions/submissions",
+    "pages/submission-detail/submission-detail",
+    "pages/records/records",
+    "pages/profile/profile",
+    "pages/admin/users/users",
+    "pages/admin/upload/upload",
+    "pages/template-center/template-center",
+    "pages/task-assignment/task-assignment",
+    "pages/task-query/task-query",
+    "pages/form-editor/form-editor",
+    "pages/collaborative-forms/collaborative-forms",
+    "pages/form-fill/form-fill",
+    "pages/form-progress/form-progress",
+    "pages/activity-history/activity-history"
+  ],
+  "window": {
+    "backgroundColor": "#F5F7FA",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#0D1F3C",
+    "navigationBarTitleText": "原料文档管理",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#007BFF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/documents/documents",
+        "text": "文档"
+      },
+      {
+        "pagePath": "pages/forms/forms",
+        "text": "表单"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

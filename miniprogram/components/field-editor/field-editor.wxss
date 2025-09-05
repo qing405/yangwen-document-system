@@ -1,0 +1,210 @@
+/* components/field-editor/field-editor.wxss */
+
+.field-editor {
+  padding: 0;
+}
+
+.editor-section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-label {
+  min-width: 80px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.form-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #FFFFFF;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* 选项设置 */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.option-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 13px;
+  background: #FFFFFF;
+  transition: all 0.2s ease;
+}
+
+.option-input:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.option-delete {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.option-delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.option-delete:active {
+  transform: scale(0.95);
+}
+
+.add-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 2px dashed #CBD5E1;
+  border-radius: 8px;
+  background: #F8FAFC;
+  color: #007BFF;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  justify-content: center;
+}
+
+.add-option:hover {
+  border-color: #007BFF;
+  background: rgba(0, 123, 255, 0.05);
+}
+
+.add-option:active {
+  transform: scale(0.98);
+}
+
+/* 操作按钮 */
+.editor-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.action-btn.cancel {
+  background: #F8FAFC;
+  color: #64748B;
+  border-color: #E2E8F0;
+}
+
+.action-btn.cancel:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.action-btn.save {
+  background: #007BFF;
+  color: white;
+  border-color: #007BFF;
+}
+
+.action-btn.save:hover {
+  background: #0056B3;
+  border-color: #0056B3;
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .form-label {
+    min-width: auto;
+    font-size: 13px;
+  }
+  
+  .form-input {
+    width: 100%;
+  }
+  
+  .option-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .option-input {
+    width: 100%;
+  }
+  
+  .option-delete {
+    align-self: flex-end;
+  }
+  
+  .editor-actions {
+    flex-direction: column;
+  }
+  
+  .action-btn {
+    width: 100%;
+  }
+}

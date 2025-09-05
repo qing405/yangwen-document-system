@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "任务查询",
+  "navigationBarBackgroundColor": "#007BFF",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#F8FAFC",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

@@ -1,0 +1,57 @@
+<!--pages/activity-history/activity-history.wxml-->
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <icon name="arrow-left" size="20" color="#333333"></icon>
+    </view>
+    <view class="header-title">活动历史</view>
+    <view class="header-right"></view>
+  </view>
+
+  <!-- 活动列表 -->
+  <view class="activities-container">
+    <!-- 加载状态 -->
+    <view class="loading-container" wx:if="{{loading}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 活动列表 -->
+    <view class="activities-list" wx:else>
+      <view class="activity-item" wx:for="{{activities}}" wx:key="id">
+        <view class="activity-icon" style="background: {{item.color}}20;">
+          <icon name="{{item.icon}}" size="16" color="{{item.color}}"></icon>
+        </view>
+        <view class="activity-content">
+          <view class="activity-title">{{item.title}}</view>
+          <view class="activity-meta">
+            <text class="activity-user">{{item.user}}</text>
+            <text class="activity-role">({{item.userRole}})</text>
+          </view>
+          <view class="activity-time">{{item.relativeTime}}</view>
+        </view>
+      </view>
+      
+      <!-- 加载更多提示 -->
+      <view class="load-more" wx:if="{{activities.length > 0}}">
+        <view wx:if="{{activitiesLoading}}" class="loading-text">
+          <view class="loading-spinner-small"></view>
+          <text>加载中...</text>
+        </view>
+        <view wx:elif="{{hasMoreActivities}}" class="load-more-text" bindtap="loadMoreActivities">
+          <text>点击加载更多</text>
+        </view>
+        <view wx:else class="no-more-text">
+          <text>没有更多活动了</text>
+        </view>
+      </view>
+      
+      <!-- 无活动时的提示 -->
+      <view class="no-activities" wx:if="{{!activities || activities.length === 0}}">
+        <icon name="warning" size="48" color="#CCCCCC"></icon>
+        <text>暂无活动记录</text>
+      </view>
+    </view>
+  </view>
+</view>

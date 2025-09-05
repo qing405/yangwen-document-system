@@ -1,0 +1,217 @@
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="header">
+    <view class="header-content">
+      <text class="header-title">协作表单中心</text>
+      <text class="header-subtitle">上传文档模板，分发给用户填写</text>
+    </view>
+    <view class="header-actions">
+      <button class="create-btn" bindtap="showCreateForm">
+        <text class="create-btn-text">+ 上传文档</text>
+      </button>
+    </view>
+  </view>
+
+
+  <!-- 文档模板列表 -->
+  <view class="forms-section">
+    <view class="section-header">
+      <text class="section-title">我的文档模板</text>
+      <text class="section-count">({{forms.length}})</text>
+      <button class="refresh-btn" bindtap="loadForms" data-force="true">
+        <text>刷新</text>
+      </button>
+    </view>
+    
+    <view class="forms-list" wx:if="{{forms.length > 0}}">
+      <view class="form-item" wx:for="{{forms}}" wx:key="_id">
+        <view class="form-header">
+          <view class="form-title">{{item.title}}</view>
+          <view class="form-status" style="color: {{item.statusColor}}">
+            {{item.statusText}}
+          </view>
+        </view>
+        
+        <view class="form-description" wx:if="{{item.description}}">
+          {{item.description}}
+        </view>
+        
+        <view class="form-meta">
+          <view class="meta-item">
+            <text class="meta-label">文档类型:</text>
+            <text class="meta-value">{{item.documentType === 'excel' ? 'Excel表格' : item.documentType === 'word' ? 'Word文档' : 'PDF文档'}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-label">文档名称:</text>
+            <text class="meta-value">{{item.documentName}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-label">创建时间:</text>
+            <text class="meta-value">{{item.createTime}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-label">填写进度:</text>
+            <text class="meta-value">{{item.progressText}}</text>
+          </view>
+        </view>
+        
+        <view class="form-actions">
+          <button class="action-btn primary" 
+                  wx:if="{{item.status === 'draft'}}"
+                  data-form-id="{{item._id}}" 
+                  bindtap="publishForm">
+            发布
+          </button>
+          <button class="action-btn secondary" 
+                  wx:if="{{item.status === 'published'}}"
+                  data-form-id="{{item._id}}" 
+                  bindtap="showDistributeForm">
+            分发
+          </button>
+          <button class="action-btn info" 
+                  data-form-id="{{item._id}}" 
+                  bindtap="viewFormProgress">
+            进度
+          </button>
+          <button class="action-btn warning" 
+                  data-form-id="{{item._id}}" 
+                  bindtap="editForm">
+            编辑
+          </button>
+          <button class="action-btn danger" 
+                  data-form-id="{{item._id}}" 
+                  bindtap="deleteForm">
+            删除
+          </button>
+        </view>
+      </view>
+    </view>
+    
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/create_cbr.png" mode="aspectFit"></image>
+      <text class="empty-text">还没有上传任何文档模板</text>
+      <text class="empty-hint">点击右上角按钮上传您的第一个Excel/Word/PDF文档</text>
+    </view>
+  </view>
+
+  <!-- 上传文档模板模态框 -->
+  <view class="modal-overlay" wx:if="{{showCreateModal}}" bindtap="hideCreateModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">上传文档模板</text>
+        <text class="modal-close" bindtap="hideCreateModal">×</text>
+      </view>
+      
+      <view class="modal-body">
+        <!-- 表单类型选择 -->
+        <view class="form-group">
+          <text class="form-label">文档类型 *</text>
+          <picker class="form-picker" 
+                  range="{{documentTypes}}" 
+                  range-key="label"
+                  value="{{currentDocumentTypeIndex}}"
+                  bindchange="onFormTypeChange">
+            <view class="picker-text">
+              <icon name="{{currentDocumentType.icon}}" size="16" color="#007BFF"></icon>
+              <text>{{currentDocumentType.label}}</text>
+            </view>
+          </picker>
+        </view>
+
+        <!-- 表单标题 -->
+        <view class="form-group">
+          <text class="form-label">模板名称 *</text>
+          <input class="form-input" 
+                 placeholder="请输入模板名称"
+                 value="{{formData.title}}"
+                 bindinput="onFormTitleInput"
+                 maxlength="50" />
+        </view>
+
+        <!-- 表单描述 -->
+        <view class="form-group">
+          <text class="form-label">模板说明</text>
+          <textarea class="form-textarea" 
+                    placeholder="请输入模板说明 (可选)"
+                    value="{{formData.description}}"
+                    bindinput="onFormDescriptionInput" />
+        </view>
+
+        <!-- 文档上传 -->
+        <view class="form-group">
+          <text class="form-label">上传文档 *</text>
+          <view class="document-upload">
+            <view class="upload-area" wx:if="{{!formData.documentUrl}}" bindtap="uploadDocument">
+              <icon name="form-fill" size="24" color="#007BFF"></icon>
+              <text class="upload-text">点击上传{{currentDocumentType.label}}</text>
+              <text class="upload-hint">支持 {{currentDocumentType.label === 'Excel表格' ? 'Excel (.xls, .xlsx)' : currentDocumentType.label === 'Word文档' ? 'Word (.doc, .docx)' : 'PDF (.pdf)'}} 格式</text>
+            </view>
+            <view class="document-info" wx:else>
+              <icon name="document-center" size="20" color="#007BFF"></icon>
+              <text class="document-name">{{formData.documentName}}</text>
+              <button class="document-reupload" bindtap="uploadDocument">重新上传</button>
+            </view>
+          </view>
+        </view>
+
+        <!-- 简化说明 -->
+        <view class="form-group">
+          <view class="simplified-info">
+            <icon name="info" size="16" color="#007BFF"></icon>
+            <text class="info-text">上传的文档将直接分发给用户填写，用户可以在线查看和填写文档内容</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn secondary" bindtap="hideCreateModal">取消</button>
+        <button class="modal-btn primary" bindtap="saveForm">保存模板</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分发表单模态框 -->
+  <view class="modal-overlay" wx:if="{{showDistributeModal}}" bindtap="hideDistributeModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">分发表单</text>
+        <text class="modal-close" bindtap="hideDistributeModal">×</text>
+      </view>
+      
+      <view class="modal-body">
+        <view class="distribute-form-info">
+          <text class="form-title">{{selectedForm.title}}</text>
+          <text class="form-description">{{selectedForm.description}}</text>
+        </view>
+        
+        <view class="users-section">
+          <text class="section-title">选择要分发的用户</text>
+          <view class="users-list">
+            <view class="user-item {{userSelectionStatus[item.workId] ? 'selected' : ''}}" 
+                  wx:for="{{users}}" 
+                  wx:key="workId"
+                  data-user-id="{{item.workId}}"
+                  bindtap="selectUser">
+              <image class="user-avatar" 
+                     src="{{item.avatar || '/images/avatar.png'}}" 
+                     mode="aspectFill"></image>
+              <view class="user-info">
+                <text class="user-name">{{item.name}}</text>
+                <text class="user-department">{{item.department}}</text>
+              </view>
+              <view class="user-selected" wx:if="{{userSelectionStatus[item.workId]}}">✓</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn secondary" bindtap="hideDistributeModal">取消</button>
+        <button class="modal-btn primary" bindtap="distributeForm">
+          分发 ({{selectedUsers.length}})
+        </button>
+      </view>
+    </view>
+  </view>
+
+</view>

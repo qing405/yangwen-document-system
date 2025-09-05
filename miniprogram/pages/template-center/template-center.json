@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "模板中心",
+  "navigationBarBackgroundColor": "#007BFF",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#F8FAFC",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

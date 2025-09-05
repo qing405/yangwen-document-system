@@ -1,0 +1,45 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+  <view class="login-header">
+    <view class="logo">
+      <text class="logo-text">原料文档管理</text>
+    </view>
+    <view class="subtitle">钢铁集团原料管理部</view>
+  </view>
+
+  <view class="login-form">
+    <view class="form-group">
+      <input 
+        class="input" 
+        placeholder="请输入工号" 
+        value="{{workId}}"
+        bindinput="onWorkIdInput"
+      />
+    </view>
+    
+    <view class="form-group">
+      <input 
+        class="input" 
+        placeholder="请输入密码" 
+        password="true"
+        value="{{password}}"
+        bindinput="onPasswordInput"
+      />
+    </view>
+
+    <button 
+      class="btn btn-primary btn-block" 
+      bindtap="onLogin"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >
+      {{loading ? '登录中...' : '登录'}}
+    </button>
+  </view>
+
+  <view class="login-footer">
+    <text class="footer-text">请使用工号和密码登录系统</text>
+  </view>
+  
+
+</view>

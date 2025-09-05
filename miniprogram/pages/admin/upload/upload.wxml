@@ -1,0 +1,141 @@
+<!--pages/admin/upload/upload.wxml-->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-title">
+      <icon name="form-fill" size="24" color="#FFFFFF"></icon>
+      <text class="title-text">上传文档</text>
+    </view>
+    <view class="header-subtitle">只有管理员可以上传文档</view>
+  </view>
+
+  <!-- 上传表单 -->
+  <view class="upload-form">
+    <!-- 文件选择 -->
+    <view class="form-section">
+      <view class="section-title">选择文件</view>
+      <view class="file-selector" bindtap="onChooseFiles">
+        <view wx:if="{{!selectedFiles || selectedFiles.length === 0}}" class="file-placeholder">
+          <icon name="documents" size="32" color="#CCCCCC"></icon>
+          <text class="placeholder-text">点击选择文件</text>
+          <text class="placeholder-hint">支持 PDF、Word、Excel、PowerPoint、图片、CAD等格式</text>
+          <text class="batch-hint">支持批量选择多个文件（最多10个）</text>
+          <view class="supported-formats">
+            <text class="format-tag">PDF</text>
+            <text class="format-tag">DOC</text>
+            <text class="format-tag">XLS</text>
+            <text class="format-tag">PPT</text>
+            <text class="format-tag">DWG</text>
+            <text class="format-tag">ZIP</text>
+          </view>
+        </view>
+        <view wx:else class="files-list">
+          <view class="files-header">
+            <text class="files-count">已选择 {{selectedFiles.length}} 个文件</text>
+            <text class="files-change" bindtap="onChooseFiles">重新选择</text>
+          </view>
+          <view class="file-item" wx:for="{{selectedFiles}}" wx:key="index" wx:for-item="file">
+            <view class="file-icon">
+              <icon name="{{getFileIcon(file.name)}}" size="20" color="#007BFF"></icon>
+            </view>
+            <view class="file-details">
+              <view class="file-name">{{file.customTitle || file.name}}</view>
+              <view class="file-meta">
+                <text class="file-size">{{formatFileSize(file.size)}}</text>
+                <text class="file-extension">.{{file.extension || file.name.split('.').pop().toLowerCase()}}</text>
+              </view>
+            </view>
+            <view class="file-remove" bindtap="removeFile" data-index="{{index}}">
+              <icon name="error" size="14" color="#dc3545"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 文档信息 -->
+    <view class="form-section">
+      <view class="section-title">文档信息</view>
+      
+
+
+      <!-- 文档分类 -->
+      <view class="form-item">
+        <view class="form-label">文档分类 *</view>
+        <picker 
+          mode="selector" 
+          range="{{documentCategories}}" 
+          range-key="label"
+          bindchange="onCategoryChange"
+        >
+          <view class="form-picker">
+            <text class="picker-text">{{categoryDisplayText}}</text>
+          </view>
+        </picker>
+
+      </view>
+
+      <!-- 部门权限 -->
+      <view class="form-item">
+        <view class="form-label">部门权限 *</view>
+        <picker 
+          mode="selector" 
+          range="{{departments}}" 
+          range-key="label"
+          bindchange="onDepartmentChange"
+        >
+          <view class="form-picker">
+            <text class="picker-text">
+              {{uploadForm.departmentAccess.length > 0 ? uploadForm.departmentAccess.join(', ') : '请选择部门权限（可多次选择添加）'}}
+            </text>
+          </view>
+        </picker>
+        <view wx:if="{{uploadForm.departmentAccess.length > 0}}" class="dept-tags">
+          <view class="dept-tag" wx:for="{{uploadForm.departmentAccess}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="tag-remove" bindtap="removeDepartment" data-name="{{item}}">×</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 标签 -->
+      <view class="form-item">
+        <view class="form-label">标签</view>
+        <input 
+          class="form-input" 
+          placeholder="请输入标签，用逗号分隔（可选）"
+          value="{{uploadForm.tags.join(', ')}}"
+          bindinput="onTagsInput"
+        />
+      </view>
+    </view>
+
+    <!-- 上传进度 -->
+    <view wx:if="{{uploading}}" class="upload-progress">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{uploadProgress}}%"></view>
+      </view>
+      <text class="progress-text">上传中... {{uploadProgress}}%</text>
+    </view>
+
+    <!-- 上传按钮 -->
+    <view class="form-actions">
+      <button 
+        class="btn btn-secondary" 
+        bindtap="resetForm"
+        disabled="{{uploading}}"
+      >
+        重置
+      </button>
+      <button 
+        class="btn btn-primary" 
+        bindtap="onUpload"
+        disabled="{{uploading}}"
+      >
+        {{uploading ? '上传中...' : '上传文档'}}
+      </button>
+    </view>
+    
+
+  </view>
+</view>

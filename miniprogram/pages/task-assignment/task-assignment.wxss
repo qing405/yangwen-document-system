@@ -1,0 +1,409 @@
+/* pages/task-assignment/task-assignment.wxss */
+
+.container {
+  min-height: 100vh;
+  background: #F8FAFC;
+}
+
+/* 头部导航 */
+.header {
+  background: linear-gradient(135deg, #007BFF 0%, #0056B3 100%);
+  padding: 40rpx 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FFFFFF;
+  position: relative;
+}
+
+.header-left {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.header-right {
+  width: 80rpx;
+}
+
+/* 表单选择 */
+.form-section, .user-section, .settings-section {
+  background: #FFFFFF;
+  margin: 32rpx;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.required {
+  color: #EF4444;
+  margin-left: 4px;
+}
+
+.form-selector, .user-selector {
+  border: 2px dashed #E2E8F0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.form-selector:hover, .user-selector:hover {
+  border-color: #007BFF;
+  background: #F0F8FF;
+}
+
+.form-placeholder, .user-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #94A3B8;
+}
+
+.selected-form, .selected-users {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-info, .user-info {
+  flex: 1;
+}
+
+.form-title, .user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 4px;
+}
+
+.form-desc, .user-role {
+  font-size: 14px;
+  color: #64748B;
+  margin-bottom: 8px;
+}
+
+.form-meta {
+  display: flex;
+  gap: 12px;
+}
+
+.form-type, .form-fields {
+  font-size: 12px;
+  color: #94A3B8;
+  background: #F1F5F9;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #F8FAFC;
+  border-radius: 8px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.remove-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FEE2E2;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* 设置项 */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.setting-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748B;
+  cursor: pointer;
+}
+
+.placeholder {
+  color: #CBD5E1;
+}
+
+.priority-tag {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.priority-tag.high {
+  background: #FEE2E2;
+  color: #EF4444;
+}
+
+.priority-tag.medium {
+  background: #FEF3C7;
+  color: #F59E0B;
+}
+
+.priority-tag.low {
+  background: #D1FAE5;
+  color: #10B981;
+}
+
+.description-input {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 14px;
+  resize: none;
+}
+
+.char-count {
+  text-align: right;
+  font-size: 12px;
+  color: #94A3B8;
+  margin-top: 4px;
+}
+
+/* 提交按钮 */
+.submit-section {
+  padding: 20px 16px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: #007BFF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.submit-btn:active {
+  background: #0056B3;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #FFFFFF;
+  border-radius: 12px;
+  width: 90%;
+  max-height: 80%;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1E293B;
+}
+
+.close-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #F1F5F9;
+  border-radius: 8px;
+  padding: 12px;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 14px;
+  background: transparent;
+  border: none;
+}
+
+.form-list, .user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-item, .user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #F8FAFC;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.form-item:hover, .user-item:hover {
+  background: #F1F5F9;
+}
+
+.form-item.selected, .user-item.selected {
+  background: #E6F7FF;
+  border: 1px solid #007BFF;
+}
+
+.selected-icon {
+  color: #007BFF;
+}
+
+/* 响应式设计 - 手机屏幕优化 */
+@media (max-width: 750rpx) {
+  .header {
+    padding: 30rpx 24rpx;
+  }
+  
+  .header-title {
+    font-size: 32rpx;
+  }
+  
+  .form-section, .user-section, .settings-section {
+    margin: 24rpx;
+    padding: 32rpx;
+  }
+  
+  .section-title {
+    font-size: 28rpx;
+    margin-bottom: 24rpx;
+  }
+  
+  .form-selector, .user-selector {
+    min-height: 120rpx;
+  }
+  
+  .form-placeholder, .user-placeholder {
+    font-size: 26rpx;
+  }
+  
+  .setting-item {
+    padding: 24rpx 0;
+  }
+  
+  .setting-label {
+    font-size: 28rpx;
+  }
+  
+  .setting-value {
+    font-size: 26rpx;
+  }
+  
+  .submit-btn {
+    height: 88rpx;
+    font-size: 32rpx;
+  }
+  
+  .modal-content {
+    margin: 60rpx 40rpx;
+    max-height: 80vh;
+  }
+  
+  .modal-title {
+    font-size: 32rpx;
+  }
+  
+  .form-item, .user-item {
+    padding: 24rpx;
+  }
+  
+  .form-title, .user-name {
+    font-size: 28rpx;
+  }
+  
+  .form-desc, .user-role {
+    font-size: 24rpx;
+  }
+}

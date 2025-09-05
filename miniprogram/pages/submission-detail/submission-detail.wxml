@@ -1,0 +1,83 @@
+<!--pages/submission-detail/submission-detail.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">提交详情</view>
+    <view class="page-subtitle" wx:if="{{submissionId}}">提交 #{{submissionId}}</view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-icon">⏳</view>
+    <text>加载中...</text>
+  </view>
+
+  <!-- 错误状态 -->
+  <view wx:elif="{{error}}" class="error-state">
+    <view class="error-icon">❌</view>
+    <view class="error-text">{{error}}</view>
+    <view class="error-actions">
+      <button class="btn btn-primary" bindtap="onRetry">重试</button>
+      <button class="btn btn-secondary" bindtap="onBack">返回</button>
+    </view>
+  </view>
+
+  <!-- 提交详情 -->
+  <view wx:elif="{{submission}}" class="submission-detail">
+    <!-- 基本信息 -->
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="info-label">提交时间：</text>
+          <text class="info-value">{{submission.submittedAt || '未知'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">提交人：</text>
+          <text class="info-value">{{submission.submitterName || '未知'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">状态：</text>
+          <text class="info-value">
+            <text class="tag tag-success">已完成</text>
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 表单数据 -->
+    <view class="section" wx:if="{{submission.formData && submission.formData.length > 0}}">
+      <view class="section-title">表单数据</view>
+      <view class="form-data">
+        <view 
+          class="data-item" 
+          wx:for="{{submission.formData}}" 
+          wx:key="field"
+        >
+          <view class="data-label">{{item.label || item.field}}</view>
+          <view class="data-value">{{item.value || '未填写'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无表单数据提示 -->
+    <view class="section" wx:else>
+      <view class="section-title">表单数据</view>
+      <view class="empty-data">
+        <text>暂无表单数据</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="btn btn-secondary" bindtap="onBack">返回</button>
+    </view>
+  </view>
+
+  <!-- 默认状态 -->
+  <view wx:else class="default-state">
+    <view class="default-icon">📄</view>
+    <view class="default-text">提交记录不存在</view>
+    <button class="btn btn-primary" bindtap="onBack">返回</button>
+  </view>
+</view>

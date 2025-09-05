@@ -1,0 +1,93 @@
+<!--components/field-editor/field-editor.wxml-->
+<view class="field-editor">
+  <!-- 字段基本信息 -->
+  <view class="editor-section">
+    <view class="section-title">基本信息</view>
+    
+    <view class="form-row">
+      <view class="form-label">字段标签</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入字段标签" 
+        value="{{localField.label}}"
+        bindinput="updateField"
+        data-property="label"
+      />
+    </view>
+    
+    <view class="form-row">
+      <view class="form-label">占位符</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入占位符" 
+        value="{{localField.placeholder}}"
+        bindinput="updateField"
+        data-property="placeholder"
+      />
+    </view>
+    
+    <view class="form-row">
+      <view class="form-label">必填</view>
+      <switch 
+        checked="{{localField.required}}"
+        bindchange="toggleRequired"
+      />
+    </view>
+  </view>
+
+  <!-- 字段类型特定设置 -->
+  <view class="editor-section" wx:if="{{localField.type === 'select' || localField.type === 'radio' || localField.type === 'checkbox'}}">
+    <view class="section-title">选项设置</view>
+    
+    <view class="options-list">
+      <view 
+        class="option-item"
+        wx:for="{{localField.options}}"
+        wx:key="index"
+      >
+        <input 
+          class="option-input" 
+          value="{{item}}"
+          bindinput="updateOption"
+          data-index="{{index}}"
+          placeholder="请输入选项内容"
+        />
+        <view class="option-delete" bindtap="deleteOption" data-index="{{index}}">
+          <icon name="delete" size="16" color="#EF4444"></icon>
+        </view>
+      </view>
+      
+      <view class="add-option" bindtap="addOption">
+        <icon name="plus" size="16" color="#007BFF"></icon>
+        <text>添加选项</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="editor-section" wx:if="{{localField.type === 'rating'}}">
+    <view class="section-title">评分设置</view>
+    
+    <view class="form-row">
+      <view class="form-label">最大评分</view>
+      <input 
+        class="form-input" 
+        type="number"
+        placeholder="请输入最大评分" 
+        value="{{localField.maxRating}}"
+        bindinput="updateMaxRating"
+      />
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="editor-actions">
+    <view class="action-btn cancel" bindtap="cancelEdit">
+      <icon name="close" size="16" color="#64748B"></icon>
+      <text>取消</text>
+    </view>
+    <view class="action-btn save" bindtap="saveField">
+      <icon name="check" size="16" color="#FFFFFF"></icon>
+      <text>保存</text>
+    </view>
+  </view>
+</view>

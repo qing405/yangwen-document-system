@@ -1,0 +1,519 @@
+<!--pages/documents/documents.wxml-->
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-title">
+      <icon name="documents" size="24" color="#FFFFFF"></icon>
+      <text class="title-text">文档中心</text>
+    </view>
+    
+    <!-- 简化模式：不显示切换按钮 -->
+
+    <!-- 管理员上传按钮 -->
+    <view wx:if="{{userInfo.role === 'admin'}}" class="upload-section">
+      <view class="upload-btn" bindtap="onUploadDocument">
+        <icon name="form-fill" size="16" color="#FFFFFF"></icon>
+        <text class="upload-text">上传文档</text>
+      </view>
+      
+
+    </view>
+    
+    <!-- 视图切换选项 -->
+    <view class="view-options">
+      <view 
+        class="view-option {{viewMode === 'list' ? 'active' : ''}}" 
+        bindtap="onViewModeChange" 
+        data-mode="list"
+      >
+        <icon name="documents" size="16" color="{{viewMode === 'list' ? '#FFFFFF' : 'rgba(255,255,255,0.8)'}}"></icon>
+        <text class="option-text">列表</text>
+      </view>
+      <view 
+        class="view-option {{viewMode === 'grid' ? 'active' : ''}}" 
+        bindtap="onViewModeChange" 
+        data-mode="grid"
+      >
+        <icon name="statistics" size="16" color="{{viewMode === 'grid' ? '#FFFFFF' : 'rgba(255,255,255,0.8)'}}"></icon>
+        <text class="option-text">网格</text>
+      </view>
+      <view wx:if="{{!simplifyMode}}"
+        class="view-option {{viewMode === 'detail' ? 'active' : ''}}" 
+        bindtap="onViewModeChange" 
+        data-mode="detail"
+      >
+        <icon name="document-center" size="16" color="{{viewMode === 'detail' ? '#FFFFFF' : 'rgba(255,255,255,0.8)'}}"></icon>
+        <text class="option-text">详情</text>
+      </view>
+      <view wx:if="{{!simplifyMode}}"
+        class="view-option {{isSelectionMode ? 'active' : ''}}" 
+        bindtap="toggleSelectionMode"
+      >
+        <icon name="{{isSelectionMode ? 'error' : 'success'}}" size="16" color="{{isSelectionMode ? '#FFFFFF' : 'rgba(255,255,255,0.8)'}}"></icon>
+        <text class="option-text">{{isSelectionMode ? '退出' : '选择'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选区域 -->
+  <view class="search-filter-container">
+    <!-- 搜索区域 -->
+    <view class="search-section">
+      <view class="search-wrapper">
+        <view class="search-icon">
+          <icon name="statistics" size="16" color="#666666"></icon>
+        </view>
+        <input 
+          class="search-input" 
+          placeholder="搜索文档名称..." 
+          placeholder-class="search-placeholder"
+          value="{{keyword}}"
+          bindinput="onSearchInput"
+        />
+        <view wx:if="{{keyword}}" class="clear-btn" bindtap="clearSearch">
+          <icon name="error" size="14" color="#999999"></icon>
+        </view>
+      </view>
+      <view class="search-btn-primary" bindtap="onSearch">
+        <icon name="statistics" size="16" color="#FFFFFF"></icon>
+      </view>
+    </view>
+    
+    <!-- 搜索建议 -->
+    <view wx:if="{{searchSuggestions.length > 0}}" class="search-suggestions">
+      <view 
+        class="suggestion-item" 
+        wx:for="{{searchSuggestions}}" 
+        wx:key="*this"
+        bindtap="onSelectSuggestion"
+        data-suggestion="{{item}}"
+      >
+        <icon name="statistics" size="14" color="#666666"></icon>
+        <text class="suggestion-text">{{item}}</text>
+      </view>
+    </view>
+    
+    <!-- 活跃筛选条件 -->
+    <view wx:if="{{activeFilters.length > 0}}" class="active-filters">
+      <view class="filters-header">
+        <text class="filters-title">已选条件</text>
+        <view class="clear-all-filters" bindtap="clearAllFilters">
+          <text>清除全部</text>
+        </view>
+      </view>
+      <view class="filter-tags">
+        <view 
+          class="filter-tag" 
+          wx:for="{{activeFilters}}" 
+          wx:key="key"
+          bindtap="removeFilter"
+          data-key="{{item.key}}"
+        >
+          <text class="filter-label">{{item.label}}</text>
+          <view class="filter-remove">
+            <icon name="error" size="10" color="#FFFFFF"></icon>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 筛选选项 -->
+    <view class="filter-options">
+      <view class="filter-row">
+        <picker 
+          mode="selector" 
+          range="{{documentTypes}}" 
+          range-key="label"
+          value="{{selectedType}}"
+          bindchange="onTypeChange"
+        >
+          <view class="filter-item">
+            <view class="filter-content">
+              <text class="filter-text">{{selectedType || '全部类型'}}</text>
+              <view class="filter-icon">
+                <icon name="warning" size="14" color="#FF6B35"></icon>
+              </view>
+            </view>
+          </view>
+        </picker>
+        
+        <view class="filter-item" bindtap="toggleSortMenu">
+          <view class="filter-content">
+            <text class="filter-text">排序: {{sortText || '最近更新'}}</text>
+            <view class="filter-icon">
+              <icon name="warning" size="14" color="#FF6B35"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view wx:if="{{!simplifyMode}}" class="filter-row">
+        <view class="filter-item" bindtap="toggleFilterPanel">
+          <view class="filter-content">
+            <text class="filter-text">筛选</text>
+            <view class="filter-icon">
+              <icon name="user-management" size="14" color="#666666"></icon>
+            </view>
+          </view>
+        </view>
+        
+        <view class="filter-item" bindtap="toggleSelectionMode">
+          <view class="filter-content">
+            <text class="filter-text">{{isSelectionMode ? '退出选择' : '批量操作'}}</text>
+            <view class="filter-icon">
+              <icon name="{{isSelectionMode ? 'error' : 'success'}}" size="14" color="{{isSelectionMode ? '#FF6B35' : '#52C41A'}}"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 排序菜单 -->
+    <view wx:if="{{showSortMenu}}" class="sort-menu">
+      <view class="menu-header">
+        <text class="menu-title">排序方式</text>
+        <view class="menu-close" bindtap="toggleSortMenu">
+          <icon name="error" size="16" color="#666666"></icon>
+        </view>
+      </view>
+      <view class="sort-options">
+        <view 
+          class="sort-option {{sortBy === 'uploadedAt' && sortOrder === 'desc' ? 'active' : ''}}"
+          data-value="uploadedAt-desc"
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">最近更新</text>
+          <view wx:if="{{sortBy === 'uploadedAt' && sortOrder === 'desc'}}" class="sort-check">
+            <icon name="success" size="14" color="#52C41A"></icon>
+          </view>
+        </view>
+        <view 
+          class="sort-option {{sortBy === 'title' && sortOrder === 'asc' ? 'active' : ''}}"
+          data-value="title-asc"
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">按名称排序</text>
+          <view wx:if="{{sortBy === 'title' && sortOrder === 'asc'}}" class="sort-check">
+            <icon name="success" size="14" color="#52C41A"></icon>
+          </view>
+        </view>
+        <view 
+          class="sort-option {{sortBy === 'fileSize' && sortOrder === 'desc' ? 'active' : ''}}"
+          data-value="fileSize-desc"
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">按大小排序</text>
+          <view wx:if="{{sortBy === 'fileSize' && sortOrder === 'desc'}}" class="sort-check">
+            <icon name="success" size="14" color="#52C41A"></icon>
+          </view>
+        </view>
+        <view 
+          class="sort-option {{sortBy === 'downloadCount' && sortOrder === 'desc' ? 'active' : ''}}"
+          data-value="downloadCount-desc"
+          bindtap="onSortChange"
+        >
+          <text class="sort-text">按下载量排序</text>
+          <view wx:if="{{sortBy === 'downloadCount' && sortOrder === 'desc'}}" class="sort-check">
+            <icon name="success" size="14" color="#52C41A"></icon>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 文档分类 -->
+  <view class="categories">
+    <view 
+      class="category {{selectedCategory === 'all' ? 'active' : ''}}" 
+      bindtap="onCategoryChange" 
+      data-category="all"
+    >
+      <icon name="documents" size="24" color="{{selectedCategory === 'all' ? '#FFFFFF' : '#007BFF'}}"></icon>
+      <text class="category-text">全部文档</text>
+    </view>
+    <view 
+      class="category {{selectedCategory === '技术文档' ? 'active' : ''}}" 
+      bindtap="onCategoryChange" 
+      data-category="技术文档"
+    >
+      <icon name="document-center" size="24" color="{{selectedCategory === '技术文档' ? '#FFFFFF' : '#007BFF'}}"></icon>
+      <text class="category-text">技术文档</text>
+    </view>
+    <view 
+      class="category {{selectedCategory === '设计图纸' ? 'active' : ''}}" 
+      bindtap="onCategoryChange" 
+      data-category="设计图纸"
+    >
+      <icon name="statistics" size="24" color="{{selectedCategory === '设计图纸' ? '#FFFFFF' : '#007BFF'}}"></icon>
+      <text class="category-text">设计图纸</text>
+    </view>
+    <view 
+      class="category {{selectedCategory === '操作规程' ? 'active' : ''}}" 
+      bindtap="onCategoryChange" 
+      data-category="操作规程"
+    >
+      <icon name="form-fill" size="24" color="{{selectedCategory === '操作规程' ? '#FFFFFF' : '#007BFF'}}"></icon>
+      <text class="category-text">操作规程</text>
+    </view>
+    <view 
+      class="category {{selectedCategory === '质量手册' ? 'active' : ''}}" 
+      bindtap="onCategoryChange" 
+      data-category="质量手册"
+    >
+      <icon name="records" size="24" color="{{selectedCategory === '质量手册' ? '#FFFFFF' : '#007BFF'}}"></icon>
+      <text class="category-text">质量手册</text>
+    </view>
+    <view 
+      class="category {{selectedCategory === '安全规范' ? 'active' : ''}}" 
+      bindtap="onCategoryChange" 
+      data-category="安全规范"
+    >
+      <icon name="user-management" size="24" color="{{selectedCategory === '安全规范' ? '#FFFFFF' : '#007BFF'}}"></icon>
+      <text class="category-text">安全规范</text>
+    </view>
+    <view 
+      class="category {{selectedCategory === '报告分析' ? 'active' : ''}}" 
+      bindtap="onCategoryChange" 
+      data-category="报告分析"
+    >
+      <icon name="statistics" size="24" color="{{selectedCategory === '报告分析' ? '#FFFFFF' : '#007BFF'}}"></icon>
+      <text class="category-text">报告分析</text>
+    </view>
+  </view>
+
+  <!-- 高级筛选面板 -->
+  <view wx:if="{{showFilterPanel}}" class="filter-panel">
+    <view class="filter-section">
+      <view class="filter-title">时间范围</view>
+      <picker mode="selector" range="{{timeRanges}}" range-key="label" value="{{selectedTimeRange}}" bindchange="onTimeRangeChange">
+        <view class="filter-picker">
+          <text>{{selectedTimeRange || '全部时间'}}</text>
+          <icon name="warning" size="16" color="#666666"></icon>
+        </view>
+      </picker>
+    </view>
+    
+    <view class="filter-section">
+      <view class="filter-title">文件大小</view>
+      <picker mode="selector" range="{{fileSizes}}" range-key="label" value="{{selectedSize}}" bindchange="onSizeChange">
+        <view class="filter-picker">
+          <text>{{selectedSize || '全部大小'}}</text>
+          <icon name="warning" size="16" color="#666666"></icon>
+        </view>
+      </picker>
+    </view>
+    
+    <view class="filter-section">
+      <view class="filter-title">上传者</view>
+      <picker mode="selector" range="{{uploaders}}" range-key="name" value="{{selectedUploaderIndex}}" bindchange="onUploaderChange">
+        <view class="filter-picker">
+          <text>{{selectedUploaderName || '全部上传者'}}</text>
+          <icon name="warning" size="16" color="#666666"></icon>
+        </view>
+      </picker>
+    </view>
+    
+    <view class="filter-actions">
+      <button class="btn btn-secondary" bindtap="toggleFilterPanel">取消</button>
+      <button class="btn btn-primary" bindtap="applyFilters">应用</button>
+    </view>
+  </view>
+
+  <!-- 文档列表 -->
+  <view class="documents-list">
+    <view wx:if="{{documents.length === 0 && !loading}}" class="empty-state">
+      <icon name="documents" size="48" color="#CCCCCC"></icon>
+      <view class="empty-text">暂无文档</view>
+      <view class="empty-suggestion">尝试调整搜索条件或上传新文档</view>
+    </view>
+    
+    <!-- 批量选择模式下的全选按钮 -->
+    <view wx:if="{{isSelectionMode}}" class="select-all-section">
+      <view class="select-all-btn" bindtap="toggleSelectAll">
+        <icon name="{{selectedDocuments.length === documents.length ? 'success' : 'warning'}}" size="20" color="{{selectedDocuments.length === documents.length ? '#52C41A' : '#FAAD14'}}"></icon>
+        <text class="select-text">全选 ({{selectedDocuments.length}}/{{documents.length}})</text>
+      </view>
+    </view>
+    
+    <view wx:else>
+      <!-- 列表视图 -->
+      <view wx:if="{{viewMode === 'list'}}" class="list-view">
+        <view 
+          class="document-item list-item" 
+          wx:for="{{documents}}" 
+          wx:key="_id"
+          bindtap="onDocumentTap"
+          data-id="{{item._id}}"
+        >
+          <!-- 文档图标和基本信息 -->
+          <view class="list-item-left">
+            <view class="doc-icon">
+              <icon name="documents" size="32" color="#1E3A68"></icon>
+            </view>
+            <view class="doc-info">
+              <view class="doc-title">{{item.title}}</view>
+              <view class="doc-tags">
+                <text class="tag tag-primary">{{item.displayType || item.type}}</text>
+                <text class="tag tag-secondary">{{item.displayCategory || item.category}}</text>
+              </view>
+            </view>
+          </view>
+          
+          <!-- 文档元数据 -->
+          <view class="list-item-center">
+            <view class="doc-meta-row">
+              <text class="meta-item">
+                <icon name="statistics" size="12" color="#666666"></icon>
+                查看: {{item.viewCount || 0}}
+              </text>
+              <text class="meta-item">
+                <icon name="form-fill" size="12" color="#666666"></icon>
+                下载: {{item.downloadCount || 0}}
+              </text>
+            </view>
+            <view class="doc-meta-row">
+              <text class="meta-item">
+                <icon name="document-center" size="12" color="#666666"></icon>
+                {{item.displayFileSize || item.fileSize || '未知'}}
+              </text>
+              <text class="meta-item">
+                <icon name="records" size="12" color="#666666"></icon>
+                {{item.displayUploadTime || item.uploadedAt}}
+              </text>
+            </view>
+          </view>
+          
+          <!-- 操作按钮 -->
+          <view class="list-item-actions">
+            <view class="action-btn" bindtap="onFavoriteDocument" data-id="{{item._id}}">
+              <icon name="{{item.isFavorite ? 'success' : 'warning'}}" size="14" color="{{item.isFavorite ? '#FAAD14' : '#666666'}}"></icon>
+              <text class="action-text">{{item.isFavorite ? '已收藏' : '收藏'}}</text>
+            </view>
+            <view class="action-btn" bindtap="onShareDocument" data-id="{{item._id}}">
+              <icon name="user-management" size="14" color="#666666"></icon>
+              <text class="action-text">分享</text>
+            </view>
+            <view class="action-btn" bindtap="onPreview" data-id="{{item._id}}">
+              <icon name="statistics" size="14" color="#666666"></icon>
+              <text class="action-text">预览</text>
+            </view>
+            <view class="action-btn primary" bindtap="onDownload" data-id="{{item._id}}">
+              <icon name="form-fill" size="14" color="#FFFFFF"></icon>
+              <text class="action-text">下载</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 网格视图 -->
+      <view wx:elif="{{viewMode === 'grid'}}" class="documents-grid">
+        <view 
+          class="document-card" 
+          wx:for="{{documents}}" 
+          wx:key="_id"
+          bindtap="onDocumentTap"
+          data-id="{{item._id}}"
+        >
+          <view class="doc-thumbnail">
+            <icon name="documents" size="48" color="#1E3A68"></icon>
+          </view>
+          <view class="doc-content">
+            <view class="doc-title">{{item.title}}</view>
+            <view class="doc-meta">
+              <text class="doc-type">{{item.displayType || item.type}}</text>
+              <text class="doc-category" wx:if="{{item.displayCategory || item.category}}">{{item.displayCategory || item.category}}</text>
+              <text class="doc-size">{{item.displayFileSize || item.fileSize || '未知'}}</text>
+            </view>
+            <view class="doc-meta">
+              <text class="doc-date">{{item.displayUploadTime || item.uploadedAt}}</text>
+              <text class="doc-downloads">下载: {{item.downloadCount || 0}}</text>
+            </view>
+            <view class="doc-actions">
+              <button class="doc-btn preview-btn" bindtap="onPreview" data-id="{{item._id}}">
+                <icon name="statistics" size="12" color="#007BFF"></icon>
+                <text>预览</text>
+              </button>
+              <button class="doc-btn download-btn" bindtap="onDownload" data-id="{{item._id}}">
+                <icon name="form-fill" size="12" color="#FFFFFF"></icon>
+                <text>下载</text>
+              </button>
+              <button wx:if="{{userInfo.role === 'admin'}}" class="doc-btn delete-btn" catchtap="onDelete" data-id="{{item._id}}">
+                <icon name="error" size="12" color="#FFFFFF"></icon>
+                <text>删除</text>
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 详细信息视图 -->
+      <view wx:elif="{{viewMode === 'detail'}}" class="detail-view">
+        <view 
+          class="document-detail-item" 
+          wx:for="{{documents}}" 
+          wx:key="_id"
+          bindtap="onDocumentTap"
+          data-id="{{item._id}}"
+        >
+          <view class="detail-item-header">
+            <view class="detail-item-title">
+              <icon wx:if="{{item.isFavorite}}" name="success" size="16" color="#FAAD14"></icon>
+              {{item.title}}
+            </view>
+            <view class="detail-item-type">{{item.displayType || item.type}}</view>
+            <view class="detail-item-category" wx:if="{{item.displayCategory || item.category}}">{{item.displayCategory || item.category}}</view>
+          </view>
+          <view class="detail-item-info">
+            <view class="detail-info-row">
+              <text class="detail-label">上传时间：</text>
+              <text class="detail-value">{{item.displayUploadTime || item.uploadedAt}}</text>
+            </view>
+            <view class="detail-info-row">
+              <text class="detail-label">文件大小：</text>
+              <text class="detail-value">{{item.displayFileSize || item.fileSize || '未知'}}</text>
+            </view>
+            <view class="detail-info-row">
+              <text class="detail-label">查看次数：</text>
+              <text class="detail-value">{{item.viewCount || 0}}</text>
+            </view>
+            <view class="detail-info-row">
+              <text class="detail-label">下载次数：</text>
+              <text class="detail-value">{{item.downloadCount || 0}}</text>
+            </view>
+          </view>
+          <view class="detail-item-actions">
+            <view class="detail-action-btn" bindtap="onFavoriteDocument" data-id="{{item._id}}">
+              <icon name="{{item.isFavorite ? 'success' : 'warning'}}" size="14" color="{{item.isFavorite ? '#FAAD14' : '#666666'}}"></icon>
+              <text class="detail-action-text">收藏</text>
+            </view>
+            <view class="detail-action-btn" bindtap="onShareDocument" data-id="{{item._id}}">
+              <icon name="user-management" size="14" color="#666666"></icon>
+              <text class="detail-action-text">分享</text>
+            </view>
+            <view class="detail-action-btn" bindtap="onPreview" data-id="{{item._id}}">
+              <icon name="statistics" size="14" color="#666666"></icon>
+              <text class="detail-action-text">预览</text>
+            </view>
+            <view class="detail-action-btn primary" bindtap="onDownload" data-id="{{item._id}}">
+              <icon name="form-fill" size="14" color="#FFFFFF"></icon>
+              <text class="detail-action-text">下载</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{loading}}" class="loading">
+    <icon name="statistics" size="24" color="#007BFF"></icon>
+    <text>加载中...</text>
+  </view>
+  
+  <view wx:if="{{!hasMore && documents.length > 0}}" class="no-more">
+    <text>没有更多了</text>
+  </view>
+
+
+</view>
+

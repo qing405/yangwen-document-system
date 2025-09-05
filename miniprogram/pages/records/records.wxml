@@ -1,0 +1,133 @@
+<!--pages/records/records.wxml-->
+<view class="container">
+  <!-- 筛选栏 -->
+  <view class="filter-section">
+    <view class="filter-row">
+      <picker 
+        mode="selector" 
+        range="{{recordTypes}}" 
+        range-key="label"
+        value="{{selectedType}}"
+        bindchange="onTypeChange"
+      >
+        <view class="filter-item">
+          <text>{{selectedType || '全部类型'}}</text>
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+      
+      <picker 
+        wx:if="{{userRole === 'admin'}}"
+        mode="selector" 
+        range="{{workshops}}" 
+        range-key="name"
+        value="{{selectedWorkshop}}"
+        bindchange="onWorkshopChange"
+      >
+        <view class="filter-item">
+          <text>{{selectedWorkshop || '全部车间'}}</text>
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+      
+      <picker 
+        mode="selector" 
+        range="{{recordStatus}}" 
+        range-key="label"
+        value="{{selectedStatus}}"
+        bindchange="onStatusChange"
+      >
+        <view class="filter-item">
+          <text>{{selectedStatus || '全部状态'}}</text>
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-section">
+    <button 
+      wx:if="{{canCreate}}"
+      class="btn btn-primary" 
+      bindtap="onCreateRecord"
+    >
+      📝 创建台账
+    </button>
+  </view>
+
+  <!-- 台账列表 -->
+  <view class="records-list">
+    <view wx:if="{{records.length === 0 && !loading}}" class="empty-state">
+      <view class="empty-icon">📋</view>
+      <view class="empty-text">暂无台账记录</view>
+    </view>
+    
+    <view wx:else>
+      <view 
+        class="record-item list-item" 
+        wx:for="{{records}}" 
+        wx:key="_id"
+        bindtap="onRecordTap"
+        data-id="{{item._id}}"
+      >
+        <view class="list-item-content">
+          <view class="list-item-title">{{item.title}}</view>
+          <view class="list-item-desc">
+            <text class="tag tag-primary">{{item.type}}</text>
+            <text class="tag tag-workshop">{{item.workshopName}}</text>
+            <text class="text-muted">{{item.created_at}}</text>
+          </view>
+          <view class="list-item-meta">
+            <text class="text-muted">创建人：{{item.creatorName}}</text>
+            <text class="status-tag status-{{item.status}}">
+              {{item.status === 'pending' ? '待审批' : 
+                item.status === 'approved' ? '已通过' : '已拒绝'}}
+            </text>
+          </view>
+        </view>
+        
+        <view class="list-item-actions">
+          <!-- 审批按钮 -->
+          <view 
+            wx:if="{{canApprove && item.status === 'pending'}}"
+            class="action-btn action-approve" 
+            bindtap="onApproveRecord" 
+            data-id="{{item._id}}" 
+            data-status="approved"
+          >
+            <text class="action-icon">✅</text>
+          </view>
+          <view 
+            wx:if="{{canApprove && item.status === 'pending'}}"
+            class="action-btn action-reject" 
+            bindtap="onApproveRecord" 
+            data-id="{{item._id}}" 
+            data-status="rejected"
+          >
+            <text class="action-icon">❌</text>
+          </view>
+          
+          <!-- 删除按钮 -->
+          <view 
+            wx:if="{{canDelete}}"
+            class="action-btn action-delete" 
+            bindtap="onDeleteRecord" 
+            data-id="{{item._id}}"
+          >
+            <text class="action-icon">🗑️</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+  
+  <view wx:if="{{!hasMore && records.length > 0}}" class="no-more">
+    <text>没有更多了</text>
+  </view>
+</view>
