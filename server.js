@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 80;
 
+// 输出环境信息
+console.log('环境配置:');
+console.log('- NODE_ENV:', process.env.NODE_ENV || 'development');
+console.log('- WX_CLOUD_ENV:', process.env.WX_CLOUD_ENV || 'cloud1-6g1pgt8pc50014d6');
+console.log('- PORT:', port);
+
 // 导入云函数
 const cloudFunction = require('./index.js');
 
