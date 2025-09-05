@@ -1,14 +1,61 @@
-# Windows
-[Dd]esktop.ini
-Thumbs.db
-$RECYCLE.BIN/
+# 微信小程序
+miniprogram/node_modules/
+miniprogram/.DS_Store
+miniprogram/Thumbs.db
 
-# macOS
-.DS_Store
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
+# 云函数
+cloudfunctions/*/node_modules/
+cloudfunctions/*/.DS_Store
+cloudfunctions/*/Thumbs.db
 
-# Node.js
+# 日志文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 运行时数据
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# 依赖目录
 node_modules/
+jspm_packages/
+
+# 可选npm缓存目录
+.npm
+
+# 可选eslint缓存
+.eslintcache
+
+# 输出目录
+dist/
+build/
+
+# 环境变量文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 微信开发者工具生成的文件
+project.private.config.json
